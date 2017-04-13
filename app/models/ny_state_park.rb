@@ -1,0 +1,2 @@
+class NyStatePark < ApplicationRecord
+end
