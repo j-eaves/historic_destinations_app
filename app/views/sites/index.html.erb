@@ -1,11 +1,72 @@
 <!-- sites/index.html.erb -->
-<h3> Historical Sites Index </h3>
-<%= @historic_sites.each do |site| %>
-	<p>Name: <%= site["name"] %>
-	<p>Category: <%= site["category"] %></p>
-	<p>County: <%= site["county"] %></p>
-	<p>URL: <a href="<%= site['facility_url'] %>"><%= site["facility_url"] %></a></p>
-	<p>Location: lat: <%= site["location"]["coordinates"][0] %>, long: <%= site["location"]["coordinates"][1] %></p>
-	<p>Region Number: <%= site["region"] %></p>
-	<p>------------------------</p>
-<% end %>
+
+<!-- Welcome to index.html.erb! -->
+
+<!-- <style>
+  /* Always set the map height explicitly to define the size of the div
+   * element that contains the map. */
+/*  #map {
+    height: 100%;
+    width: 80%;
+  }*/
+  /* Optional: Makes the sample page fill the window. */
+/*  html, body {
+  	height was 100%, with no width, while everything else was 0%
+    height: 100%;
+    margin: 20;
+    padding: 20;
+  }*/
+</style> -->
+
+<body>
+<div id="app">
+  {{ message }}
+</div>
+<div id="map"></div>
+<script>
+  function initMap() {
+    var myLatLng = {lat: 42.0833097387, lng: -73.911040157};
+    var places = [
+		{name: "Washington's Headquarters", latitude: 40.9355500517, longitude: -73.8993128614, description: "http://nysparks.com/historic-sites/17/details.aspx"}, 
+		{name: "Schuyler Mansion", latitude: 42.6413229736, longitude: -73.7592869931, description: "http://nysparks.com/historic-sites/33/details.aspx"}, 
+		{name: "Clermont", latitude: 42.0833097387, longitude: -73.911040157, description: "http://nysparks.com/historic-sites/16/details.aspx"}
+	];
+
+    // Create a map object and specify the DOM element for display.
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: myLatLng,
+      scrollwheel: false,
+      zoom: 8
+    });
+
+    // Create a marker and set its position.
+    // var marker = new google.maps.Marker({
+    //   map: map,
+    //   position: myLatLng,
+    //   title: 'Hello World!'
+    // });
+    for (var i = 0; i < places.length; i++) {
+		//call the function 
+       createMarker(places[i]);
+	}
+	function createMarker(location){
+		var infowindow = new google.maps.InfoWindow({
+			content: location.description
+		});
+
+		var marker = new google.maps.Marker({
+			position: {lat: location.latitude, lng: location.longitude},
+			map: map, 
+			title: location.name
+		});
+		marker.addListener('click', function() {
+			infowindow.open(map, marker);
+		});
+	}
+  }
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUva3q8K4CQFTUX7WqQXJXY5xV95OhmNU&callback=initMap"
+async defer></script>
+</body>
+

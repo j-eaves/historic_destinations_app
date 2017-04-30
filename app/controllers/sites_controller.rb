@@ -1,8 +1,12 @@
 class SitesController < ApplicationController
-  def index
-  	@historic_sites = Unirest.get('https://data.ny.gov/resource/ufat-zvgh.json').body
-  	#@historic_sites = NyStatePark.all
-    render 'index.html.erb'
-    #render 'index.json.jbuilder'
-  end
+	def index
+		#@historic_sites = NyStatePark.all
+		#render 'index.html.erb'
+		#render 'index.json.jbuilder'
+	end
+	# def show
+	# 	@historic_site = NyStatePark.find_by(id: params[:id])
+	# 	render 'show.html.erb'
+	# 	#render 'show.json.jbuilder'
+	# end
 end

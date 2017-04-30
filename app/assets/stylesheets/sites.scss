@@ -1,3 +1,13 @@
 // Place all the styles related to the Sites controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+  #map {
+    height: 80%;
+    width: 80%;
+  }
+  html, body {
+  	/* height was 100%, with no width, while everything else was 0% */
+    height: 100%;
+    margin: 20;
+    padding: 20;
+  }
