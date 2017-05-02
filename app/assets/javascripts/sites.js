@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   var app = new Vue({
     el: '#app',
     data: {
-      places: [],
+      sites: [],
       message: 'Hello Vue!'
     },
     mounted: function() {
@@ -12,6 +12,28 @@ document.addEventListener("DOMContentLoaded", function(event) {
         console.log(this);
         this.sites = response;
       }.bind(this));
+    },
+    methods: {
+      assignCenterPoint: function() {
+        console.log('in assignCenterPoint...')
+        var parameters = {
+          latitude: this.centerPointLatitude,
+          longitude: this.centerPointLongitude
+        }
+      },
+      addHistoricDestination: function() {
+        console.log('adding new location...')
+        //push an object into destinations
+        var parameters = {
+          name: this.newPlaceName,
+          category: this.newPlaceCategory,
+          county: this.newPlaceCounty,
+          url: this.newPlaceUrl,
+          latitude: this.newPlaceLatitude,
+          longitude: this.newPlaceLongitude,
+          region_number: this.newPlaceRegionNumber
+          }
+        }
     }
   });
 });

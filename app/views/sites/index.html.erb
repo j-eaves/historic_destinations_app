@@ -20,7 +20,13 @@
 
 <body>
 <div id="app">
-  {{ message }}
+  <!-- {{ sites }} -->
+  <div v-for="site in sites">
+  	<p> Name of historic site: {{ site.name }} </p>
+  	<p> Latitude: {{ site.latitude }} </p>
+  	<p> Longitude: {{ site.longitude }} </p>
+  	<hr>
+  </div>
 </div>
 <div id="map"></div>
 <script>
