@@ -1,0 +1,34 @@
+<!-- sites/show.html.erb -->
+<!-- <p>ID: <%= @historic_site.id %></p>
+<p>Name: <%= @historic_site.name %></p>
+<p>Category: <%= @historic_site.category %></p>
+<p>County: <%= @historic_site.county %></p>
+<p>URL: <a href="<%= @historic_site.url %>"><%= @historic_site.url %></a></p>
+<p>Location: lat: <%= @historic_site.latitude %>, long: <%= @historic_site.longitude %></p>
+<p>Region Number: <%= @historic_site.region_number %></p> -->
+
+<body>
+<hr>
+<h4>Sites from my API</h4>
+<div id="app">
+  <!-- {{ sites }} -->
+<div v-for="site in sites">
+  	<p> Name of historic site: {{ site.name }} </p>
+  	<p> Latitude: {{ site.latitude }} </p>
+  	<p> Longitude: {{ site.longitude }} </p>
+  	<hr>
+  </div>
+
+<!--   {{ coordinates }}
+  {{ coordinates.lat }}
+  {{ coordinates.lng }} -->
+</div>
+
+<div id="map" "initMap()"></div>
+
+<!-- The content that is normally within the script tags has been moved to sites.js -->
+<!-- My map link with my key is next -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUva3q8K4CQFTUX7WqQXJXY5xV95OhmNU&callback=initMap"
+async defer></script>
+</body>
+
