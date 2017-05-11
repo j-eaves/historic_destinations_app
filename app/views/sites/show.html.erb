@@ -1,18 +1,14 @@
 <body>
 <hr>
-<h4>Sites from my API</h4>
+<!-- <h4>Sites from my API</h4> -->
 <div id="app">
   <!-- {{ sites }} -->
-	<div v-for="site in sites">
+<!-- 	<div v-for="site in sites">
 	  	<p> Name of historic site: {{ site.name }} </p>
 	  	<p> Latitude: {{ site.latitude }} </p>
 	  	<p> Longitude: {{ site.longitude }} </p>
 	  	<hr>
-	</div>
-	{{ coordinates }}
- 
-<!--   {{ coordinates.lat }}
-  {{ coordinates.lng }}  -->
+	</div> -->
 </div>
 
 <div id="map"></div>
@@ -20,6 +16,7 @@
 	function initMap() {
 
 		//get my user input center point latitude from the sites_controller
+		//var searchLocation = "<%= @address %>";
 		var latitude = parseFloat("<%= @lat %>");
 	    console.log(latitude)
 	    //get my center point latitude from the sites_controller
@@ -27,6 +24,8 @@
 	    console.log(longitude)
 	    //create a JS hash with the latitude and longitude
 	    var latLng = {lat: latitude, lng: longitude};
+
+	  	var centerPointPin = {name: "Your Location: <%= @address %>", latitude: latitude, longitude: longitude};
 
 	    //declare the createMarker function (this was at the bottom)
 		function createMarker(location){
@@ -65,9 +64,109 @@
 	    var map = new google.maps.Map(document.getElementById('map'), {
 	      center: latLng,
 	      scrollwheel: false,
-	      zoom: 10
+	      zoom: 11,
+	      styles: [
+			{
+			    "elementType": "labels",
+			    "stylers": [
+			        {
+			            "visibility": "on"
+			        }
+			    ]
+			},
+			{
+			    "featureType": "road",
+			    "elementType": "geometry.fill",
+			    "stylers": [
+			        {
+			            "color": "#0F0919"
+			        }
+			    ]
+			},
+			{
+			    "featureType": "water",
+			    "elementType": "geometry.fill",
+			    "stylers": [
+			        {
+			            "color": "#E4F7F7"
+			        }
+			    ]
+			},
+			{
+			    "elementType": "geometry.stroke",
+			    "stylers": [
+			        {
+			            "visibility": "off"
+			        }
+			    ]
+			},
+			{
+			    "featureType": "poi.park",
+			    "elementType": "geometry.fill",
+			    "stylers": [
+			        {
+			            "color": "#002FA7"
+			        }
+			    ]
+			},
+			{
+			    "featureType": "poi.attraction",
+			    "elementType": "geometry.fill",
+			    "stylers": [
+			        {
+			            "color": "#E60003"
+			        }
+			    ]
+			},
+			{
+			    "featureType": "landscape",
+			    "elementType": "geometry.fill",
+			    "stylers": [
+			        {
+			            "color": "#FBFCF4"
+			        }
+			    ]
+			},
+			{
+			    "featureType": "poi.business",
+			    "elementType": "geometry.fill",
+			    "stylers": [
+			        {
+			            "color": "#FFED00"
+			        }
+			    ]
+			},
+			{
+			    "featureType": "poi.government",
+			    "elementType": "geometry.fill",
+			    "stylers": [
+			        {
+			            "color": "#D41C1D"
+			        }
+			    ]
+			},
+			{
+			    "featureType": "poi.school",
+			    "elementType": "geometry.fill",
+			    "stylers": [
+			        {
+			            "color": "#BF0000"
+			        }
+			    ]
+			},
+			{
+			    "featureType": "transit.line",
+			    "elementType": "geometry.fill",
+			    "stylers": [
+			        {
+			            "saturation": -100
+			        }
+			    ]
+			}
+			]
 	    });
 
+	    createMarker(centerPointPin);
 	  // Create a map object and specify the DOM element for display.
 
 	  //the commented section below may be used at a later date

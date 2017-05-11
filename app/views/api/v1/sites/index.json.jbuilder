@@ -1,4 +1,3 @@
-# index.json.jbuilder 
 json.array! @historic_sites.each do |site|
 	json.name site.name
 	json.category site.category
