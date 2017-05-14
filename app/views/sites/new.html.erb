@@ -1,11 +1,16 @@
-<h2> Welcome to new.html.erb </h2>
+
+<div>
+	<h2 align="center"> Welcome To The Historic Detours Home Page</h2>
+</div>
 <!-- This page form needs to direct info to the center point controller new-action, which should then direct to the show page! -->
-<%= form_tag '/sites', method: :post do  %>
-
-  <div id="app">
-    <p>Your Destination Address:</p>
-    <p><input type="text" name="search_address"></p>
-  	<input type="submit" value="Let's Find Some Historical Sites Nearby!">
-  </div>
-
-<% end %>
+<!-- <form> -->
+<div id="form" align="center">
+	<%= form_tag '/sites', method: :post do  %>
+	  <div id="app">
+	    <p>Please Enter Your Destination Address:</p>
+	    <p><input type="text" name="search_address"></p>
+	  	<input type="submit" value="Let's Find Some Historical Sites Nearby!" color="blue">
+	  </div>
+	<% end %>
+</div>
+<!-- </form> -->

@@ -1,5 +1,5 @@
 <body>
-<hr>
+<!-- <hr> -->
 <!-- <h4>Sites from my API</h4> -->
 <div id="app">
   <!-- {{ sites }} -->
@@ -38,7 +38,8 @@
 		    var marker = new google.maps.Marker({
 		      position: {lat: location.latitude, lng: location.longitude},
 		      map: map, 
-		      title: location.name
+		      // title: location.name
+		      title: location
 		    });
 		    marker.addListener('click', function() {
 		      infowindow.open(map, marker);
@@ -64,7 +65,7 @@
 	    var map = new google.maps.Map(document.getElementById('map'), {
 	      center: latLng,
 	      scrollwheel: false,
-	      zoom: 11,
+	      zoom: 13,
 	      styles: [
 			{
 			    "elementType": "labels",
@@ -191,5 +192,10 @@
 <!-- My map link with my key is next -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUva3q8K4CQFTUX7WqQXJXY5xV95OhmNU&callback=initMap"
 async defer></script>
+<div id="form">
+	<%= form_tag '/', method: :get do  %>
+	  	<input type="submit" color="#00bfff" value="New Search">
+	<% end %>
+</div>
 </body>
 
