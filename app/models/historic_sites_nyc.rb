@@ -1,0 +1,2 @@
+class HistoricSitesNyc < ApplicationRecord
+end

@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     el: '#app',
     data: {
       sites: [],
+      nycHistoricSites: [],
       coordinates: {},
       message: 'Hello Vue!'
       // coordinates: []
@@ -13,6 +14,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
         console.log(response);
         console.log(this);
         this.sites = response;
+      }.bind(this));
+
+      $.get("/api/v1/houses", function(response) {
+        console.log(response);
+        console.log(this);
+        this.nycHistoricSites = response;
       }.bind(this));
 
       $.get("/api/v1/center_point", function(response) {
@@ -53,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   // } else {
   //var myLatLng = {lat: coordinates[0], lng: coordinates[1]};
   // }
-  
+
 // function initMap() {
 //   //var coordinates = <%= @coordinates %>;
 //   //var myLatitude = coordinates[0];//<%= @latitude %>;
@@ -114,6 +121,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 //     });
 //   }
 //   }
-
+//"https://data.ny.gov/api/views/iisn-hnyv.json"
 
 

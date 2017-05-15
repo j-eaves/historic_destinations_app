@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+    #routes for nyc historical sites index.json.jbuilder
+	namespace :api do
+	    namespace :v1 do
+	      get '/houses' => 'houses#index'
+	    end
+	end
+
 	get '/sites' => 'sites#index'
 	get '/' => 'sites#new'
 	get '/sites' => 'sites#new' #this could also be the center_point#create route
@@ -11,6 +18,7 @@ Rails.application.routes.draw do
 	#get "/signup" => "users#new"
  	#post "/users" => "users#create"
 
+ 	#routes for nys historical sites index.json.jbuilder
 	namespace :api do
 	  	namespace :v1 do
 		  get '/sites' => 'sites#index'
@@ -18,13 +26,14 @@ Rails.application.routes.draw do
 		end
 	end
 
+	#routes for the center point api. This may become handy in the future...
 	namespace :api do
 		namespace :v1 do
-		  #get '/center_point' => 'center_point#index'
-		  #post '/center_point' => 'center_point#index'
-		  get '/center_point' => 'center_point#new'
-		  post '/center_point' => 'center_point#create'
- 		  get 'center_point/show' => 'center_point#show'
+		  ##get '/center_point' => 'center_point#index'
+		  ##post '/center_point' => 'center_point#index'
+		  #get '/center_point' => 'center_point#new'
+		  #post '/center_point' => 'center_point#create'
+ 		  #get 'center_point/show' => 'center_point#show'
 
 		end
 	end
