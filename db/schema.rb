@@ -10,25 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170515234719) do
+ActiveRecord::Schema.define(version: 20170516235115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "historic_sites_nycs", force: :cascade do |t|
     t.string   "name"
-    t.string   "location"
+    t.string   "address"
     t.string   "park_name"
     t.string   "phone"
     t.string   "description"
     t.string   "accessible"
     t.string   "historic_house_trust_website"
-    t.string   "house_website"
+    t.string   "url"
     t.string   "property_id"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "image_url"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -49,6 +50,10 @@ ActiveRecord::Schema.define(version: 20170515234719) do
     t.integer  "region_number"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "description"
+    t.string   "image_url"
+    t.string   "address"
+    t.string   "phone"
   end
 
   create_table "sites", force: :cascade do |t|

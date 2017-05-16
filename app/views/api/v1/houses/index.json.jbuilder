@@ -1,15 +1,16 @@
 json.array! @historic_sites_nyc.each do |site|
 	json.name site.name
-	json.location site.location
+	json.address site.address
 	json.park_name site.park_name
 	json.phone site.phone
 	json.description site.description
 	json.accessible site.accessible
 	json.historic_house_trust_website site.historic_house_trust_website
-	json.house_website site.house_website
+	json.url site.url
 	json.latitude site.latitude
 	json.longitude site.longitude
 	json.property_id site.property_id
+	json.image_url site.image_url
 end
 
 ##From my table:
