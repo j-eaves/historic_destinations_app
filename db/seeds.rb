@@ -68,6 +68,9 @@
 # 	historic_house.save
 # end
 #------------------------------------------------------------------------------
+
+coordinates = Geocoder.coordinates(HistoricSitesNyc.first.location+", "+HistoricSitesNyc.first.park_name)
+#------------------------------------------------------------------------------
 # Name
 # Location
 # Park_Name

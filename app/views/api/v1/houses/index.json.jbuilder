@@ -7,6 +7,9 @@ json.array! @historic_sites_nyc.each do |site|
 	json.accessible site.accessible
 	json.historic_house_trust_website site.historic_house_trust_website
 	json.house_website site.house_website
+	json.latitude site.latitude
+	json.longitude site.longitude
+	json.property_id site.property_id
 end
 
 ##From my table:
