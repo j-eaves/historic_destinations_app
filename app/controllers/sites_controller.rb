@@ -4,7 +4,7 @@ class SitesController < ApplicationController
 	def index
 	end
 
-	def new 
+	def new
 		render 'new.html.erb'
 	end
 
@@ -18,9 +18,8 @@ class SitesController < ApplicationController
 		@place = Geocoder.search(@address)
 		p "*"*50
 		puts "COORDINATES FROM SITES CONTROLLER"
-		p @coordinates
-		p @place
-		p @coordinates.class
+		#p @coordinates
+		#p @place
 		p "*"*50
 		@lat = @coordinates[0]
 		@lng = @coordinates[1]

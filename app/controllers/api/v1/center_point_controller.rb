@@ -1,5 +1,5 @@
 class Api::V1::CenterPointController < ApplicationController
-  require 'geocoder'
+  # require 'geocoder'
   ###This controller requires no index, so far, just new, create and show
   ## def index
   ## 	render 'index.json.jbuilder'

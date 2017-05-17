@@ -4,8 +4,8 @@ class Api::V1::HousesController < ApplicationController
 	@historic_sites_nyc = HistoricSitesNyc.all
 	p "*"*50
 	puts "FROM HOUSES CONTROLLER"
-	puts "FIRST HOUSE FROM DB - FROM HOUSES CONTROLLER"
-	p @historic_sites_nyc.first
+	# puts "FIRST HOUSE FROM DB - FROM HOUSES CONTROLLER"
+	# p @historic_sites_nyc.first
 	p "*"*50
 	render 'index.json.jbuilder'
   end

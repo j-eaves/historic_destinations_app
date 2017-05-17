@@ -4,8 +4,8 @@ class Api::V1::SitesController < ApplicationController
 		@historic_sites = NyStatePark.all
 		p "*"*50
 		puts "FROM SITES CONTROLLER"
-		puts "FIRST SITE FROM DB - FROM SITES CONTROLLER"
-		p @historic_sites.first
+		#puts "FIRST SITE FROM DB - FROM SITES CONTROLLER"
+		#p @historic_sites.first
 		p "*"*50
 		render 'index.json.jbuilder'
 	end
