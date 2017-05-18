@@ -29,7 +29,7 @@
 	  	//----------------------------------------------------------------
 	    //declare the createMarker function (this was at the bottom)
 		function createMarker(location){
-			//console.log(location);
+			//var pinImage = new google.maps.MarkerImage("http://www.googlemapsmarkers.com/v1/009900/");
 		    var infowindow = new google.maps.InfoWindow({
 		      content: "<p><b><a href="+location.url+">"+location.name+"</a></b></p>"+"<p>"+location.phone+"</p>"+"<p><a href="+location.image_url+"><img src="+location.image_url+" height='142' ></a></p>"+"<p>"+location.description+"</p>"
 		    });
@@ -38,14 +38,34 @@
 		    var marker = new google.maps.Marker({
 		      position: {lat: location.latitude, lng: location.longitude},
 		      map: map, 
-		      // title: location.name
 		      title: location
 		    });
 		    
 		    marker.addListener('click', function() {
 		      infowindow.open(map, marker);
 		    });
-		  }
+		}
+		//Function for creating a center marker
+		function createCenterMarker(location){
+			//console.log(location);
+		    var infowindow1 = new google.maps.InfoWindow({
+		      content: location.name
+		    });
+		    
+		    var pinImage = new google.maps.MarkerImage("http://www.googlemapsmarkers.com/v1/009900/");
+
+		    // Create a marker and set its position.
+		    var marker1 = new google.maps.Marker({
+		      position: {lat: location.latitude, lng: location.longitude},
+		      title: location,
+		      icon: pinImage,
+		      map: map
+		    });
+		    
+		    marker1.addListener('click', function() {
+		      infowindow1.open(map, marker1);
+		    });
+		};
 
 		//grab the historical sites from my tables via my api
 		$.get("/api/v1/sites", function(response) {
@@ -186,27 +206,9 @@
 			    }
 			]
 	    });
+	    //Create your center marker
+	    createCenterMarker(centerPointPin);
 
-	    createMarker(centerPointPin);
-	  // Create a map object and specify the DOM element for display.
-
-	  //the commented section below may be used at a later date
-	  // var coordinates = {};
-
-	  // $.get("/api/v1/center_point", function(response) {
-	  //   coordinates = response;
-	  //   console.log("inside coordinates function")
-	  //   console.log(coordinates.lat);
-	  //   console.log(coordinates.lng);
-
-	  //   var latLng = {lat: coordinates.lat, lng: coordinates.lng};
-
-	  //   var map = new google.maps.Map(document.getElementById('map'), {
-	  //     center: latLng,
-	  //     scrollwheel: false,
-	  //     zoom: 10
-	  //   });
-	  // });
 	}
 </script>
 <!-- My map link with my key is next -->
