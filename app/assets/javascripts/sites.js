@@ -11,14 +11,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
     mounted: function() {
       console.log('mounted is working');
       $.get("/api/v1/sites", function(response) {
+        //Print the array to the console
         console.log(response);
-        console.log(this);
+        //console.log(this);
         this.sites = response;
       }.bind(this));
 
       $.get("/api/v1/houses", function(response) {
+        //Print the array to the console
         console.log(response);
-        console.log(this);
+        //console.log(this);
         this.nycHistoricSites = response;
       }.bind(this));
 
