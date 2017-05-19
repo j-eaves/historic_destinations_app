@@ -34,8 +34,113 @@
 	  var map = new google.maps.Map(
 	    document.getElementById("map_canvas"), {
 	      center: new google.maps.LatLng(latitude, longitude), //changed by me
-	      zoom: 13,
-	      mapTypeId: google.maps.MapTypeId.ROADMAP //I may not need this
+	      zoom: 12,
+	      //mapTypeId: google.maps.MapTypeId.ROADMAP //I may not need this
+          styles: [
+			    {
+			        "featureType": "landscape",
+			        "stylers": [
+			            {
+			                "saturation": -7
+			            },
+			            {
+			                "gamma": 1.02
+			            },
+			            {
+			                "hue": "#ffc300"
+			            },
+			            {
+			                "lightness": -10
+			            }
+			        ]
+			    },
+			    {
+			        "featureType": "road.highway",
+			        "stylers": [
+			            {
+			                "hue": "#ffaa00"
+			            },
+			            {
+			                "saturation": -45
+			            },
+			            {
+			                "gamma": 1
+			            },
+			            {
+			                "lightness": -4
+			            }
+			        ]
+			    },
+			    {
+			        "featureType": "road.arterial",
+			        "stylers": [
+			            {
+			                "hue": "#ffaa00"
+			            },
+			            {
+			                "lightness": -10
+			            },
+			            {
+			                "saturation": 64
+			            },
+			            {
+			                "gamma": 0.9
+			            }
+			        ]
+			    },
+			    {
+			        "featureType": "road.local",
+			        "stylers": [
+			            {
+			                "lightness": -5
+			            },
+			            {
+			                "hue": "#00f6ff"
+			            },
+			            {
+			                "saturation": -40
+			            },
+			            {
+			                "gamma": 0.75
+			            }
+			        ]
+			    },
+			    {
+			        "featureType": "poi",
+			        "stylers": [
+			            {
+			                "saturation": -30
+			            },
+			            {
+			                "lightness": 11
+			            },
+			            {
+			                "gamma": 0.5
+			            },
+			            {
+			                "hue": "#ff8000"
+			            }
+			        ]
+			    },
+			    {
+			        "featureType": "water",
+			        "stylers": [
+			            {
+			                "hue": "#0077ff"
+			            },
+			            {
+			                "gamma": 1.25
+			            },
+			            {
+			                "saturation": -22
+			            },
+			            {
+			                "lightness": -31
+			            }
+			        ]
+			    }
+			],
+			scaleControl: true
 	  });
 
 	  function createMarker(location){
@@ -47,17 +152,42 @@
 		    var markerTest = new google.maps.Marker({
 		      position: {lat: location.latitude, lng: location.longitude},
 		      map: map, 
-		      title: location
+		      title: location.name
 		    });
 
-		    infoWindow(markerTest, map, location.name, location.address, location.url);
+		    // infoWindow(markerTest, map, location.name, location.address, location.url);
+
+		    infoWindow(markerTest, map, location);
+
 		    //Comment out my infoWindow click function
 		    // marker.addListener('click', function() {
 		    //   infoWindow.open(map, marker);
 		    // });
 	  }
+	  function createCenterMarker(location){
+			//console.log(location);
+		    // var infowindow1 = new google.maps.InfoWindow({
+		    //   content: location.name
+		    // });
+		    
+		    var pinImage = new google.maps.MarkerImage("http://www.googlemapsmarkers.com/v1/009900/");
 
+		    // Create a marker and set its position.
+		    var marker1 = new google.maps.Marker({
+		      position: {lat: location.latitude, lng: location.longitude},
+		      title: location.name,
+		      icon: pinImage,
+		      map: map
+		    });
+		    // infoWindow(marker1, map, location.name);
+		    infoWindow(marker1, map, location);
+		    // marker1.addListener('click', function() {
+		    //   console.log("infowindow works...")
+		    //   infowindow.open(map, marker1);
+		    // });
 
+	  };
+	  createCenterMarker(centerPointPin);
 
 	  // var marker1 = new google.maps.Marker({
 	  //   position: new google.maps.LatLng(37.4419, -122.1419),
@@ -109,15 +239,46 @@
 	});
 
 	//modify to work with my window
-	function infoWindow(marker, map, title, address, url) {
+	// function infoWindow(marker, map, title, address, url, image_url, description) {
+	//   google.maps.event.addListener(marker, 'click', function() {
+	//   	// var content = "<p><b><a href="+location.url+">"+location.name+"</a></b></p>"+"<p>"+location.phone+"</p>"+"<p><a href="+location.image_url+"><img src="+location.image_url+" height='142' ></a></p>"+"<p>"+location.description+"</p>"+"<p>"+test+"</p>"
+	//   	console.log("HELLO");
+	//   	console.log(title);
+	//   	console.log(title.constructor);
+	//   	console.log("Image:");
+	//   	console.log(image_url);
+	//   	console.log(description);
+	//     var html = "<h3>" + title + "</h3>" + "<p><a href="+ image_url +"><img src="+image_url+" height='142' ></a></p>" + "<p>" + address + "</p>" + "<p><a href='" + url + "' target='_blank'>Read More</a></p>"+"<p>" + description + "</p>";
+	//     // set the content (saved in html variable using function closure)
+	//     if (title.includes("Your Location:")) {
+	//     	var html1 = "<div><h3>" + title + "</h3><p>";
+	//     	iw.setContent(html1);
+	//     } else {
+	//     	iw.setContent(html);
+	//     }
+	//     // open the infowindow on the marker.
+	//     iw.open(map, marker);
+	//   });
+	// }
+	function infoWindow(marker, map, location) {
 	  google.maps.event.addListener(marker, 'click', function() {
-	    var html = "<div><h3>" + title + "</h3><p>" + address + "</p><p><a href='" + url + "' target='_blank'>Read More</a></p></div>";
+	  	// var content = "<p><b><a href="+location.url+">"+location.name+"</a></b></p>"+"<p>"+location.phone+"</p>"+"<p><a href="+location.image_url+"><img src="+location.image_url+" height='142' ></a></p>"+"<p>"+location.description+"</p>"+"<p>"+test+"</p>"
+	  	console.log("HELLO");
+	  	console.log(location.name);
+	  	console.log(location.description);
+	    var html = "<p><b><a href="+location.url+">"+location.name+"</a></b></p>"+"<p>"+location.phone+"</p>"+"<p><a href="+location.image_url+"><img src="+location.image_url+" height='142' ></a></p>"+"<p>"+location.description+"</p>";
 	    // set the content (saved in html variable using function closure)
-	    iw.setContent(html);
+	    if (location.name.includes("Your Location:")) {
+	    	var html1 = "<div><h3>" + location.name + "</h3><p>";
+	    	iw.setContent(html1);
+	    } else {
+	    	iw.setContent(html);
+	    }
 	    // open the infowindow on the marker.
 	    iw.open(map, marker);
 	  });
 	}
+	
 	//-----------------------
 	//-----------------------
 

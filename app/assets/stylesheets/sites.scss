@@ -4,11 +4,11 @@
   /*colors that I can use: (gray) #484848; (black) #000000; see: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value*/
   /*This is from the code that I got on http://jsfiddle.net/geocodezip/7de0z99e/2/ */
   /*http://stackoverflow.com/questions/38569860/close-all-other-infowindows-when-one-is-clicked */
-  
+
   html,
   body,
   #map_canvas {
-    height: 100%;
+    height: 90%;
     width: 100%;
     margin: 0px;
     padding: 0px
@@ -18,6 +18,8 @@
     height: 90%;
     width: 90%;
   }
+
+  
   #form {
     width: 20%;
     margin: 0 auto;
