@@ -11,209 +11,328 @@
 	</div> -->
 </div>
 
-<div id="map"></div>
+<!-- The map_canvas id from http://stackoverflow.com/questions/38569860/close-all-other-infowindows-when-one-is-clicked -->
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<div id="map_canvas"></div>
+<!-- My earlier map id -->
+<!-- <div id="map"></div> -->
 <script>
-	function initMap() {
-		//----------------------------------------------------------------
-		//get my user input center point latitude from the sites_controller
-		//var searchLocation = "<%= @address %>";
-		var latitude = parseFloat("<%= @lat %>");
-	    console.log(latitude)
-	    //get my center point latitude from the sites_controller
-	    var longitude = parseFloat("<%= @lng %>");
-	    console.log(longitude)
-	    //create a JS hash with the latitude and longitude
-	    var latLng = {lat: latitude, lng: longitude};
+	//-----------------------
+	//-----------------------
+	//from: http://jsfiddle.net/geocodezip/7de0z99e/2/
+	//Modify the code between the double lines to work woth your working code
+	var geocoder;
+	var map;
+	var historicalSites = [];//declare this variable outside of the $.Get function
+	var nycHistoricSites = [];//declare this variable outside of the $.Get function
+	var latitude = parseFloat("<%= @lat %>");//mine
+	var longitude = parseFloat("<%= @lng %>");//mine
+	var centerPointPin = {name: "Your Location: <%= @address %>", latitude: latitude, longitude: longitude};//mine
 
-	  	var centerPointPin = {name: "Your Location: <%= @address %>", latitude: latitude, longitude: longitude};
-	  	//----------------------------------------------------------------
-	    //declare the createMarker function (this was at the bottom)
-		function createMarker(location){
-			//var pinImage = new google.maps.MarkerImage("http://www.googlemapsmarkers.com/v1/009900/");
-		    var infowindow = new google.maps.InfoWindow({
-		      content: "<p><b><a href="+location.url+">"+location.name+"</a></b></p>"+"<p>"+location.phone+"</p>"+"<p><a href="+location.image_url+"><img src="+location.image_url+" height='142' ></a></p>"+"<p>"+location.description+"</p>"
-		    });
+	function initialize() {
+	  
+	  var map = new google.maps.Map(
+	    document.getElementById("map_canvas"), {
+	      center: new google.maps.LatLng(latitude, longitude), //changed by me
+	      zoom: 13,
+	      mapTypeId: google.maps.MapTypeId.ROADMAP //I may not need this
+	  });
+
+	  function createMarker(location){
+		    // var infoWindow = new google.maps.InfoWindow({
+		    //   content: "<p><b><a href="+location.url+">"+location.name+"</a></b></p>"+"<p>"+location.phone+"</p>"+"<p><a href="+location.image_url+"><img src="+location.image_url+" height='142' ></a></p>"+"<p>"+location.description+"</p>"+"<p>"+test+"</p>"
+		    // });
 		    
 		    // Create a marker and set its position.
-		    var marker = new google.maps.Marker({
+		    var markerTest = new google.maps.Marker({
 		      position: {lat: location.latitude, lng: location.longitude},
 		      map: map, 
 		      title: location
 		    });
-		    
-		    marker.addListener('click', function() {
-		      infowindow.open(map, marker);
-		    });
-		}
-		//Function for creating a center marker
-		function createCenterMarker(location){
-			//console.log(location);
-		    var infowindow1 = new google.maps.InfoWindow({
-		      content: location.name
-		    });
-		    
-		    var pinImage = new google.maps.MarkerImage("http://www.googlemapsmarkers.com/v1/009900/");
 
-		    // Create a marker and set its position.
-		    var marker1 = new google.maps.Marker({
-		      position: {lat: location.latitude, lng: location.longitude},
-		      title: location,
-		      icon: pinImage,
-		      map: map
-		    });
-		    
-		    marker1.addListener('click', function() {
-		      infowindow1.open(map, marker1);
-		    });
-		};
+		    infoWindow(markerTest, map, location.name, location.address, location.url);
+		    //Comment out my infoWindow click function
+		    // marker.addListener('click', function() {
+		    //   infoWindow.open(map, marker);
+		    // });
+	  }
 
-		//grab the historical sites from my tables via my api
-		$.get("/api/v1/sites", function(response) {
-			console.log('This is the $.get /api/v1/sites function')
-			console.log(response);
-			console.log(this);
-			// this.sites = response;
-			var historicalSites = response;
-			console.log(historicalSites);
-			//create an array and fill it with all of the historicalSites
-			for (var i = 0; i < historicalSites.length; i++) {
-			  //call the function 
-			  createMarker(historicalSites[i]);
-			}
-		}.bind(this));
+
+
+	  // var marker1 = new google.maps.Marker({
+	  //   position: new google.maps.LatLng(37.4419, -122.1419),
+	  //   map: map
+	  // });
+	  // infoWindow(marker1, map, "title1", "address1", "http://www.google.com")
+	  // var marker2 = new google.maps.Marker({
+	  //   position: new google.maps.LatLng(37.44, -122.14),
+	  //   map: map
+	  // });
+	  // infoWindow(marker2, map, "title2", "address2", "http://www.yahoo.com")
+
+
+	  //grab the (state) historical sites from my tables via my api
+	  $.get("/api/v1/sites", function(response) {
+	  	  //console.log('This is the $.get /api/v1/sites function')
+	  	  //console.log(response);
+		  //console.log(this);
+	  	  historicalSites = response;
+		  //console.log(historicalSites);
+		  //create an array and fill it with all of the historicalSites
+		  for (var i = 0; i < historicalSites.length; i++) {
+		    //call the function 
+		    createMarker(historicalSites[i]);
+		  }
+	  }.bind(this));
+
 		//grab the historical houses from my tables via my api
-		$.get("/api/v1/houses", function(response) {
-			console.log('This is the $.get /api/v1/houses function')
-			console.log(response);
-			console.log(this);
-			// this.sites = response;
-			var nycHistoricSites = response;
-			console.log(nycHistoricSites);
-			//create an array and fill it with all of the nycHistoricSites
-			for (var i = 0; i < nycHistoricSites.length; i++) {
-			  //call the function 
-			  createMarker(nycHistoricSites[i]);
-			}
-		}.bind(this));
-
-		//use my latitude and longitude hash in the map function to set center
-	    var map = new google.maps.Map(document.getElementById('map'), {
-	      center: latLng,
-	      scrollwheel: true,
-	      zoom: 12,
-	      styles: [
-			    {
-			        "featureType": "landscape",
-			        "stylers": [
-			            {
-			                "saturation": -7
-			            },
-			            {
-			                "gamma": 1.02
-			            },
-			            {
-			                "hue": "#ffc300"
-			            },
-			            {
-			                "lightness": -10
-			            }
-			        ]
-			    },
-			    {
-			        "featureType": "road.highway",
-			        "stylers": [
-			            {
-			                "hue": "#ffaa00"
-			            },
-			            {
-			                "saturation": -45
-			            },
-			            {
-			                "gamma": 1
-			            },
-			            {
-			                "lightness": -4
-			            }
-			        ]
-			    },
-			    {
-			        "featureType": "road.arterial",
-			        "stylers": [
-			            {
-			                "hue": "#ffaa00"
-			            },
-			            {
-			                "lightness": -10
-			            },
-			            {
-			                "saturation": 64
-			            },
-			            {
-			                "gamma": 0.9
-			            }
-			        ]
-			    },
-			    {
-			        "featureType": "road.local",
-			        "stylers": [
-			            {
-			                "lightness": -5
-			            },
-			            {
-			                "hue": "#00f6ff"
-			            },
-			            {
-			                "saturation": -40
-			            },
-			            {
-			                "gamma": 0.75
-			            }
-			        ]
-			    },
-			    {
-			        "featureType": "poi",
-			        "stylers": [
-			            {
-			                "saturation": -30
-			            },
-			            {
-			                "lightness": 11
-			            },
-			            {
-			                "gamma": 0.5
-			            },
-			            {
-			                "hue": "#ff8000"
-			            }
-			        ]
-			    },
-			    {
-			        "featureType": "water",
-			        "stylers": [
-			            {
-			                "hue": "#0077ff"
-			            },
-			            {
-			                "gamma": 1.25
-			            },
-			            {
-			                "saturation": -22
-			            },
-			            {
-			                "lightness": -31
-			            }
-			        ]
-			    }
-			]
-	    });
-	    //Create your center marker
-	    createCenterMarker(centerPointPin);
-
+	  $.get("/api/v1/houses", function(response) {
+		  //console.log('This is the $.get /api/v1/houses function')
+		  //console.log(response);
+		  //console.log(this);
+		  nycHistoricSites = response;
+		  //console.log(nycHistoricSites);
+		  //create an array and fill it with all of the nycHistoricSites
+		  for (var i = 0; i < nycHistoricSites.length; i++) {
+		    //call the function 
+		    createMarker(nycHistoricSites[i]);
+		  }
+	  }.bind(this));
 	}
+	//initialize(); 
+	//no need to modify
+	google.maps.event.addDomListener(window, "load", initialize);
+
+	// global infowindow
+	var iw = new google.maps.InfoWindow({
+	  maxWidth: 350
+	});
+
+	//modify to work with my window
+	function infoWindow(marker, map, title, address, url) {
+	  google.maps.event.addListener(marker, 'click', function() {
+	    var html = "<div><h3>" + title + "</h3><p>" + address + "</p><p><a href='" + url + "' target='_blank'>Read More</a></p></div>";
+	    // set the content (saved in html variable using function closure)
+	    iw.setContent(html);
+	    // open the infowindow on the marker.
+	    iw.open(map, marker);
+	  });
+	}
+	//-----------------------
+	//-----------------------
+
+
+
+	// //my initial working code below (commented out for testing above code)
+	// function initMap() {
+	// 	//----------------------------------------------------------------
+	// 	//get my user input center point latitude from the sites_controller
+	// 	var searchLocation = "<%= @address %>";
+
+	// 	var latitude = parseFloat("<%= @lat %>");
+	//     //console.log(latitude)
+	//     //get my center point latitude from the sites_controller
+	//     var longitude = parseFloat("<%= @lng %>");
+	//     //console.log(longitude)
+	//     //create a JS hash with the latitude and longitude
+	//     var latLng = {lat: latitude, lng: longitude};
+
+	//     //test 5-18_6:48PM
+	//     //var infoWindow = new google.maps.InfoWindow;
+	//     var test = "hello";
+
+	//   	var centerPointPin = {name: "Your Location: <%= @address %>", latitude: latitude, longitude: longitude};
+	//   	//----------------------------------------------------------------
+	//     //declare the createMarker function (this was at the bottom)
+	// 	function createMarker(location){
+	// 	    var infoWindow = new google.maps.InfoWindow({
+	// 	      content: "<p><b><a href="+location.url+">"+location.name+"</a></b></p>"+"<p>"+location.phone+"</p>"+"<p><a href="+location.image_url+"><img src="+location.image_url+" height='142' ></a></p>"+"<p>"+location.description+"</p>"+"<p>"+test+"</p>"
+	// 	    });
+		    
+	// 	    // Create a marker and set its position.
+	// 	    var marker = new google.maps.Marker({
+	// 	      position: {lat: location.latitude, lng: location.longitude},
+	// 	      map: map, 
+	// 	      title: location
+	// 	    });
+
+	// 	    marker.addListener('click', function() {
+	// 	      infoWindow.open(map, marker);
+	// 	    });
+	// 	}
+	// 	//Function for creating a center marker
+	// 	function createCenterMarker(location){
+	// 		//console.log(location);
+	// 	    var infowindow1 = new google.maps.InfoWindow({
+	// 	      content: location.name
+	// 	    });
+		    
+	// 	    var pinImage = new google.maps.MarkerImage("http://www.googlemapsmarkers.com/v1/009900/");
+
+	// 	    // Create a marker and set its position.
+	// 	    var marker1 = new google.maps.Marker({
+	// 	      position: {lat: location.latitude, lng: location.longitude},
+	// 	      title: location,
+	// 	      icon: pinImage,
+	// 	      map: map
+	// 	    });
+		    
+	// 	    marker1.addListener('click', function() {
+	// 	      infowindow1.open(map, marker1);
+	// 	    });
+
+	// 	};
+
+	// 	//grab the historical sites from my tables via my api
+	// 	$.get("/api/v1/sites", function(response) {
+	// 		console.log('This is the $.get /api/v1/sites function')
+	// 		console.log(response);
+	// 		console.log(this);
+	// 		// this.sites = response;
+	// 		var historicalSites = response;
+	// 		console.log(historicalSites);
+	// 		//create an array and fill it with all of the historicalSites
+	// 		for (var i = 0; i < historicalSites.length; i++) {
+	// 		  //call the function 
+	// 		  createMarker(historicalSites[i]);
+	// 		}
+	// 	}.bind(this));
+
+	// 	//grab the historical houses from my tables via my api
+	// 	$.get("/api/v1/houses", function(response) {
+	// 		console.log('This is the $.get /api/v1/houses function')
+	// 		console.log(response);
+	// 		console.log(this);
+	// 		// this.sites = response;
+	// 		var nycHistoricSites = response;
+	// 		console.log(nycHistoricSites);
+	// 		//create an array and fill it with all of the nycHistoricSites
+	// 		for (var i = 0; i < nycHistoricSites.length; i++) {
+	// 		  //call the function 
+	// 		  createMarker(nycHistoricSites[i]);
+	// 		}
+	// 	}.bind(this));
+
+	// 	//use my latitude and longitude hash in the map function to set center
+	//     var map = new google.maps.Map(document.getElementById('map'), {
+	//       center: latLng,
+	//       scrollwheel: true,
+	//       zoom: 12,
+	//       styles: [
+	// 		    {
+	// 		        "featureType": "landscape",
+	// 		        "stylers": [
+	// 		            {
+	// 		                "saturation": -7
+	// 		            },
+	// 		            {
+	// 		                "gamma": 1.02
+	// 		            },
+	// 		            {
+	// 		                "hue": "#ffc300"
+	// 		            },
+	// 		            {
+	// 		                "lightness": -10
+	// 		            }
+	// 		        ]
+	// 		    },
+	// 		    {
+	// 		        "featureType": "road.highway",
+	// 		        "stylers": [
+	// 		            {
+	// 		                "hue": "#ffaa00"
+	// 		            },
+	// 		            {
+	// 		                "saturation": -45
+	// 		            },
+	// 		            {
+	// 		                "gamma": 1
+	// 		            },
+	// 		            {
+	// 		                "lightness": -4
+	// 		            }
+	// 		        ]
+	// 		    },
+	// 		    {
+	// 		        "featureType": "road.arterial",
+	// 		        "stylers": [
+	// 		            {
+	// 		                "hue": "#ffaa00"
+	// 		            },
+	// 		            {
+	// 		                "lightness": -10
+	// 		            },
+	// 		            {
+	// 		                "saturation": 64
+	// 		            },
+	// 		            {
+	// 		                "gamma": 0.9
+	// 		            }
+	// 		        ]
+	// 		    },
+	// 		    {
+	// 		        "featureType": "road.local",
+	// 		        "stylers": [
+	// 		            {
+	// 		                "lightness": -5
+	// 		            },
+	// 		            {
+	// 		                "hue": "#00f6ff"
+	// 		            },
+	// 		            {
+	// 		                "saturation": -40
+	// 		            },
+	// 		            {
+	// 		                "gamma": 0.75
+	// 		            }
+	// 		        ]
+	// 		    },
+	// 		    {
+	// 		        "featureType": "poi",
+	// 		        "stylers": [
+	// 		            {
+	// 		                "saturation": -30
+	// 		            },
+	// 		            {
+	// 		                "lightness": 11
+	// 		            },
+	// 		            {
+	// 		                "gamma": 0.5
+	// 		            },
+	// 		            {
+	// 		                "hue": "#ff8000"
+	// 		            }
+	// 		        ]
+	// 		    },
+	// 		    {
+	// 		        "featureType": "water",
+	// 		        "stylers": [
+	// 		            {
+	// 		                "hue": "#0077ff"
+	// 		            },
+	// 		            {
+	// 		                "gamma": 1.25
+	// 		            },
+	// 		            {
+	// 		                "saturation": -22
+	// 		            },
+	// 		            {
+	// 		                "lightness": -31
+	// 		            }
+	// 		        ]
+	// 		    }
+	// 		],
+	// 		scaleControl: true
+	//     });
+	//     //Create your center marker
+	//     createCenterMarker(centerPointPin);
+
+	// }
 </script>
+
 <!-- My map link with my key is next -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUva3q8K4CQFTUX7WqQXJXY5xV95OhmNU&callback=initMap"
-async defer></script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUva3q8K4CQFTUX7WqQXJXY5xV95OhmNU&callback=initMap"
+async defer></script> -->
 <div id="form">
 	<%= form_tag '/', method: :get do  %>
 	  	<input type="submit" value="New Search">

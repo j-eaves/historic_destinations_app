@@ -22,11 +22,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
         this.nycHistoricSites = response;
       }.bind(this));
 
-      $.get("/api/v1/center_point", function(response) {
-        console.log(response);
-        console.log(this);
-        this.coordinates = response;
-      }.bind(this));
+      // $.get("/api/v1/center_point", function(response) {
+      //   console.log(response);
+      //   console.log(this);
+      //   this.coordinates = response;
+      // }.bind(this));
     },
     methods: {
       assignCenterPoint: function() {
@@ -47,8 +47,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
           latitude: this.newPlaceLatitude,
           longitude: this.newPlaceLongitude,
           region_number: this.newPlaceRegionNumber
-          }
         }
+      }
     }
   });
 });
