@@ -5,45 +5,64 @@
   /*This is from the code that I got on http://jsfiddle.net/geocodezip/7de0z99e/2/ */
   /*http://stackoverflow.com/questions/38569860/close-all-other-infowindows-when-one-is-clicked */
 
-  html,
-  body,
+  /*html,
+  body,*/
+  
+  html, 
+
+  body {
+    /* height was 100%, with no width, while everything else was 0% */
+    height: 100%;
+    width: 100%;
+    margin: 30;
+    padding: 30;
+  }
+
   #map_canvas {
     height: 90%;
     width: 100%;
     margin: 0px;
-    padding: 0px
+    padding: 10px
   }
 
-    #map {
+  #map {
     height: 90%;
     width: 90%;
   }
 
-  
+  #button{
+    height:20px; 
+    width:100px; 
+    margin: -20px -50px; 
+    position:relative;
+    top:5%; 
+    left:50%;
+  }
+
   #form {
-    width: 20%;
+    //width: 50%;
     margin: 0 auto;
     align: "center";
   }
+
+  #div{
+    text-align:center;
+  }
+
   h2{
     color : black;
     text-align:"center";
   } 
+
   body
   {
     background-color : #fffacd;
   }
-  h1
-  {
+
+  h1{
     color : black;
     text-align : center;
     font-family: "SIMPSON";
-  }
-  html, body {
-  	/* height was 100%, with no width, while everything else was 0% */
-    height: 100%;
-    margin: 30;
-    padding: 30;
   }
 
   /*table {

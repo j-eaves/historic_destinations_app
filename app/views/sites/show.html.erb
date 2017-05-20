@@ -196,7 +196,7 @@
 	  google.maps.event.addListener(marker, 'click', function() {
 	  	
 	    var html = "<p><b><a href="+location.url+">"+location.name+"</a></b></p>"+"<p>"+location.phone+"</p>"+"<p><a href="+location.image_url+"><img src="+location.image_url+" height='142' ></a></p>"+"<p>"+location.description+"</p>";
-	    
+
 	    // set the content (saved in html variable using function closure)
 	    if (location.name.includes("Your Location:")) {
 	    	var html1 = "<div><h3>" + location.name + "</h3><p>";
@@ -211,7 +211,7 @@
 	
 </script>
 
-<div id="form">
+<div id="button">
 	<%= form_tag '/', method: :get do  %>
 	  	<input type="submit" value="New Search">
 	<% end %>
