@@ -41,7 +41,7 @@
 	var latitude = parseFloat("<%= @lat %>");//mine
 	var longitude = parseFloat("<%= @lng %>");//mine
 	var centerPointPin = {name: "Your Location: <%= @address %>", latitude: latitude, longitude: longitude};//mine
-	
+
 	var convertMetersToImperial = function(meters) {
 		var result = "Distance from start point: ";
 		var feet = meters/0.304800609601;
@@ -53,6 +53,7 @@
 		}
 		return result;
 	};
+	
 	function initialize() {
 	  
 	  var map = new google.maps.Map(
@@ -249,34 +250,16 @@
 
 	    //---------------------------------------------------
 	    //Start distance function
-
-
 		var center = map.getCenter();
 		var markerLatLng = marker.getPosition();
 		var distance = google.maps.geometry.spherical.computeDistanceBetween(center, markerLatLng);
 		console.log("TESTING...")
 		console.log(convertMetersToImperial(distance));
-		var feet = distance/0.304800609601;
-		var miles = feet/5280;
-		var remainingFeet = miles%5280;
-		var distanceStringImperial = "Distance from start point: ";
-		console.log("distance: ");
-		console.log(distance);
-		console.log("feet: ");
-		console.log(feet);
-		console.log("miles: ");
-		console.log(miles);
-		if (miles > 1) {
-			distanceStringImperial += miles.toFixed(2).toString() + " miles"
-		} else {
-			distanceStringImperial += feet.toFixed(2).toString() + " feet"
-		}
-		console.log(distanceStringImperial);
 	    //End distance function
 	    //---------------------------------------------------
 
 	    //This is the new code
-	    var html = "<p><b><a href="+location.url+">"+location.name+"</a></b></p>" 	+ "<p>"+location.phone+"</p>" + "<p><img class='enlarge-onhover' src="+location.image_url+" alt="+location.alt_image_url+"></p>" + "<p>"+location.description+"</p>"+"<p><b>"+convertMetersToImperial(distance)+"</b></p>";
+	    var html = "<h3><b><a href="+location.url+">"+location.name+"</a></b></h3>" 	+ "<p>"+location.phone+"</p>" + "<p><img class='enlarge-onhover' src="+location.image_url+" alt="+location.alt_image_url+"></p>" + "<p>"+location.description+"</p>"+"<p><b>"+convertMetersToImperial(distance)+"</b></p>";
 
 
 	    // set the content (saved in html variable using function closure)
