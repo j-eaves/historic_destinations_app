@@ -53,7 +53,7 @@
 		}
 		return result;
 	};
-	
+
 	function initialize() {
 	  
 	  var map = new google.maps.Map(
@@ -224,29 +224,11 @@
 	  maxWidth: 385
 	});
 
-
-
-	//-------------------------------------------------------
-	////from:http://stackoverflow.com/questions/2252324/how-to-enlarge-image-while-hover-over-an-image
-	// function bigImg(x) {
-	//    x.style.height = "300px";
-	//    //x.style.width = "64px";
-	// }
-
-	// function normalImg(x) {
-	//    x.style.height = "142px";
-	//    //x.style.width = "32px";
-	// }
-	//-------------------------------------------------------
-
 	function infoWindow(marker, map, location) {
 
 	  google.maps.event.addListener(marker, 'click', function() {
 	  	//This was the original code
 	    // var html = "<p><b><a href="+location.url+">"+location.name+"</a></b></p>"+"<p>"+location.phone+"</p>"+"<p><a href="+location.image_url+"><img src="+location.image_url+" height='142' ></a></p>"+"<p>"+location.description+"</p>";
-
-	    // //This is the new code with the bigImg and normalImg funtions from above
-	    // var html = "<p><b><a href="+location.url+">"+location.name+"</a></b></p>"+"<p>"+location.phone+"</p>"+"<p><img onmouseover=bigImg(this) onmouseout=normalImg(this) border='0' src="+location.image_url" + "alt="location.alt_image_url" + "height='300'></p>"+"<p>" + location.description + "</p>";
 
 	    //---------------------------------------------------
 	    //Start distance function
@@ -257,10 +239,21 @@
 		console.log(convertMetersToImperial(distance));
 	    //End distance function
 	    //---------------------------------------------------
+	    var location_url = "<h3><b><a href="+location.url+">"+location.name+"</a></b></h3>";
+	    var phone = "<p>"+location.phone+"</p>";
+	    var location_image_url = "<p><img class='enlarge-onhover' src="+location.image_url+" alt="+location.alt_image_url+"></p>";
+	    var location_description = "<p>"+location.description+"</p>";
+	    var location_distance = "<p><b>"+convertMetersToImperial(distance)+"</b></p>";
+	    //This is the code for enlarging the image in the infoWindow
+	    // var html = "<h3><b><a href="+location.url+">"+location.name+"</a></b></h3>" + "<p>"+location.phone+"</p>" + "<p><img class='enlarge-onhover' src="+location.image_url+" alt="+location.alt_image_url+"></p>" + "<p>"+location.description+"</p>"+"<p><b>"+convertMetersToImperial(distance)+"</b></p>";
+	    //---------------------------------------------------
+	    var html = location_url+phone+location_image_url+location_description+location_distance;
+	    //---------------------------------------------------
 
-	    //This is the new code
-	    var html = "<h3><b><a href="+location.url+">"+location.name+"</a></b></h3>" 	+ "<p>"+location.phone+"</p>" + "<p><img class='enlarge-onhover' src="+location.image_url+" alt="+location.alt_image_url+"></p>" + "<p>"+location.description+"</p>"+"<p><b>"+convertMetersToImperial(distance)+"</b></p>";
+	    //This is the Modal code
 
+		// End modal code
+	    //-----------------------------------
 
 	    // set the content (saved in html variable using function closure)
 	    if (location.name.includes("Your Location:")) {
@@ -274,18 +267,6 @@
 	  });
 	}
 
-	//from: http://stackoverflow.com/questions/2252324/how-to-enlarge-image-while-hover-over-an-image
-	//<img class="enlarge-onhover" src="img.jpg">
-
-	//-------------------------------------------------------
-	//+"<p><img src="+location.image_url+" height='142'></p>"+
-
-	//Original code with my info plugged in
-	//+"<p><img onmouseover=" + bigImg(this) + " onmouseout=" + normalImg(this) + " border='0' src="location.image_url" + "alt="location.alt_image_url" + "height='600'></p>"+
-
-	//Original code from online
-	// <img onmouseover="bigImg(this)" onmouseout="normalImg(this)" border="0" src="smiley.gif" alt="Smiley" width="32" height="32">
-	//-------------------------------------------------------
 	
 </script>
 
