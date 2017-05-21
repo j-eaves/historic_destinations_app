@@ -1,3 +1,5 @@
+
+
 <body>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -14,24 +16,6 @@
   </div>
 </nav>  
 
-<!-- Start Test -->
-<!-- <h1>Popup/Modal Windows without JavaScript</h1> -->
-<!-- <div class="box">
-	<a class="button" href="#popup1">Let me Pop up</a>
-</div> -->
-
-<!-- <div id="popup1" class="overlay"> -->
-	<!-- <div class="popup"> -->
-		<!-- <h2>Here i am</h2> -->
-		<!-- <a class="close" href="#">×</a> -->
-		<!-- <div class="content">
-			Thanks for pop me out of that button, but now i'm done so you can close this window.
-		</div> -->
-	<!-- </div> -->
-<!-- </div> -->
-<!-- End Test -->
-
-
 <div id="app">
   <!-- {{ sites }}
 	<div v-for="site in sites">
@@ -41,9 +25,13 @@
 </div>
 
 <!-- The map_canvas id from http://stackoverflow.com/questions/38569860/close-all-other-infowindows-when-one-is-clicked -->
-<script src="https://maps.googleapis.com/maps/api/js"></script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js" ></script> -->
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false"></script>
+
 <div id="map_canvas"></div>
+<!-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script> -->
 <script>
+
 	//from: http://jsfiddle.net/geocodezip/7de0z99e/2/
 	//Modify the code between the double lines to work woth your working code
 	var geocoder;
@@ -53,7 +41,18 @@
 	var latitude = parseFloat("<%= @lat %>");//mine
 	var longitude = parseFloat("<%= @lng %>");//mine
 	var centerPointPin = {name: "Your Location: <%= @address %>", latitude: latitude, longitude: longitude};//mine
-
+	
+	var convertMetersToImperial = function(meters) {
+		var result = "Distance from start point: ";
+		var feet = meters/0.304800609601;
+		var miles = feet/5280;
+		if (miles > 1) {
+			result += miles.toFixed(2).toString() + " miles" 
+		} else {
+			result += feet.toFixed(2).toString() + " feet"
+		}
+		return result;
+	};
 	function initialize() {
 	  
 	  var map = new google.maps.Map(
@@ -224,7 +223,10 @@
 	  maxWidth: 385
 	});
 
+
+
 	//-------------------------------------------------------
+	////from:http://stackoverflow.com/questions/2252324/how-to-enlarge-image-while-hover-over-an-image
 	// function bigImg(x) {
 	//    x.style.height = "300px";
 	//    //x.style.width = "64px";
@@ -245,8 +247,37 @@
 	    // //This is the new code with the bigImg and normalImg funtions from above
 	    // var html = "<p><b><a href="+location.url+">"+location.name+"</a></b></p>"+"<p>"+location.phone+"</p>"+"<p><img onmouseover=bigImg(this) onmouseout=normalImg(this) border='0' src="+location.image_url" + "alt="location.alt_image_url" + "height='300'></p>"+"<p>" + location.description + "</p>";
 
+	    //---------------------------------------------------
+	    //Start distance function
+
+
+		var center = map.getCenter();
+		var markerLatLng = marker.getPosition();
+		var distance = google.maps.geometry.spherical.computeDistanceBetween(center, markerLatLng);
+		console.log("TESTING...")
+		console.log(convertMetersToImperial(distance));
+		var feet = distance/0.304800609601;
+		var miles = feet/5280;
+		var remainingFeet = miles%5280;
+		var distanceStringImperial = "Distance from start point: ";
+		console.log("distance: ");
+		console.log(distance);
+		console.log("feet: ");
+		console.log(feet);
+		console.log("miles: ");
+		console.log(miles);
+		if (miles > 1) {
+			distanceStringImperial += miles.toFixed(2).toString() + " miles"
+		} else {
+			distanceStringImperial += feet.toFixed(2).toString() + " feet"
+		}
+		console.log(distanceStringImperial);
+	    //End distance function
+	    //---------------------------------------------------
+
 	    //This is the new code
-	    var html = "<p><b><a href="+location.url+">"+location.name+"</a></b></p>" 	+ "<p>"+location.phone+"</p>" + "<p><img class='enlarge-onhover' src="+location.image_url+" alt="+location.alt_image_url+"></p>" + "<p>"+location.description+"</p>";
+	    var html = "<p><b><a href="+location.url+">"+location.name+"</a></b></p>" 	+ "<p>"+location.phone+"</p>" + "<p><img class='enlarge-onhover' src="+location.image_url+" alt="+location.alt_image_url+"></p>" + "<p>"+location.description+"</p>"+"<p><b>"+convertMetersToImperial(distance)+"</b></p>";
+
 
 	    // set the content (saved in html variable using function closure)
 	    if (location.name.includes("Your Location:")) {
@@ -260,6 +291,7 @@
 	  });
 	}
 
+	//from: http://stackoverflow.com/questions/2252324/how-to-enlarge-image-while-hover-over-an-image
 	//<img class="enlarge-onhover" src="img.jpg">
 
 	//-------------------------------------------------------

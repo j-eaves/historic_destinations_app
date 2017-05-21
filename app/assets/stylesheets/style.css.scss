@@ -1,3 +1,12 @@
+
+	.color_text{
+		font-family: Arial, sans-serif;
+		color: #040404;
+		/* margin: 90px; */
+	}
+/*----------------------------*/
+/* Bootstrap Navbar CSS for sites/show.html.erb */	
+
 	.navbar-default{
 	  background: transparent;
 	  border:none;
@@ -18,23 +27,46 @@
     	color: #ffffff;
 	}
 
-
-
+/*----------------------------*/
+/* Enlarge image on mouseover */
 
 	.enlarge-onhover {
 	     width: 142px;
-	     //height: 142px;
+	     /*height: 142px;*/
 	}
 
 	.enlarge-onhover:hover {
 	     width: 375px;
-	     //height: 375px;
+	     /*height: 375px;*/
 	}
+/*----------------------------*/
+/* Background image on landing page sites/new.html.erb*/
+
+body, html {
+    height: 100%;
+}
+
+.bg { 
+    /* The image used */
+    background-image: url("http://www.old-maps.com/NY/ny-state/NY_1812_Arrowsmith-web.jpg");
+    /* Other images */
+    /* http://tile.loc.gov/image-services/iiif/service:gmd:gmd380:g3800:g3800:ar104703/full/pct:12.5/0/default.jpg */
+    /* http://www.old-maps.com/NY/ny-state/NY_1812_Arrowsmith-web.jpg */
+    /* http://www.stonybrook.edu/libmap/img005b.jpg */
+
+    /* Full height */
+    height: 130%;
+    width: 130%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
 
-
-
-
+/*----------------------------*/
+/* Enlarge image on mouseover */
+	/*
 	body {
 	  font-family: Arial, sans-serif;
 	  background: url(4.jpg);
@@ -121,3 +153,5 @@
 	  max-height: 30%;
 	  overflow: auto;
 	}
+	*/
+	/*----------------------------*/

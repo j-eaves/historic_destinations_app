@@ -1,18 +1,19 @@
 
-<div>
-	<h2 align="center"> Welcome To The Historic Detours Home Page</h2>
-</div>
-<!-- This page form needs to direct info to the center point controller new-action, which should then direct to the show page! -->
-<!-- <form> -->
-<div id="form" align="center">
-	<%= form_tag '/sites', method: :post do  %>
-	  <div id="app">
-	    <!-- <p>Please Enter Your Destination Address:</p> -->
-	    <p><input type="text" name="search_address" placeholder="Enter A Destination"></p>
-	  	<input type="submit" value="Let's Find Some Historical Sites Nearby!" color="Blue">
-	  </div>
-	<% end %>
-</div>
+<div class="bg">
+	<div>
+		<h1 align="center" class="color_text"><b> Historic Detours</b></h1>
+	</div>
+	<!-- This page form needs to direct info to the center point controller new-action, which should then direct to the show page! -->
+	<!-- <form> -->
+	<div id="form" align="center">
+		<%= form_tag '/sites', method: :post do  %>
+		  <div id="app">
+		    <!-- <p>Please Enter Your Destination Address:</p> -->
+		    <p><input type="text" name="search_address" placeholder="Enter A Destination"></p>
+		  	<input type="submit" value="Let's Find Some Historical Sites Nearby!" color="Blue">
+		  </div>
+		<% end %>
+	</div>
 <!-- </form> -->
-
+</div>
 	
