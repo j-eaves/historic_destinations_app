@@ -12,7 +12,25 @@
       
     </div>
   </div>
-</nav>   
+</nav>  
+
+<!-- Start Test -->
+<!-- <h1>Popup/Modal Windows without JavaScript</h1> -->
+<!-- <div class="box">
+	<a class="button" href="#popup1">Let me Pop up</a>
+</div> -->
+
+<!-- <div id="popup1" class="overlay"> -->
+	<!-- <div class="popup"> -->
+		<!-- <h2>Here i am</h2> -->
+		<!-- <a class="close" href="#">×</a> -->
+		<!-- <div class="content">
+			Thanks for pop me out of that button, but now i'm done so you can close this window.
+		</div> -->
+	<!-- </div> -->
+<!-- </div> -->
+<!-- End Test -->
+
 
 <div id="app">
   <!-- {{ sites }}
@@ -203,14 +221,32 @@
 
 	// global infowindow
 	var iw = new google.maps.InfoWindow({
-	  maxWidth: 350
+	  maxWidth: 385
 	});
+
+	//-------------------------------------------------------
+	// function bigImg(x) {
+	//    x.style.height = "300px";
+	//    //x.style.width = "64px";
+	// }
+
+	// function normalImg(x) {
+	//    x.style.height = "142px";
+	//    //x.style.width = "32px";
+	// }
+	//-------------------------------------------------------
 
 	function infoWindow(marker, map, location) {
 
 	  google.maps.event.addListener(marker, 'click', function() {
-	  	
-	    var html = "<p><b><a href="+location.url+">"+location.name+"</a></b></p>"+"<p>"+location.phone+"</p>"+"<p><a href="+location.image_url+"><img src="+location.image_url+" height='142' ></a></p>"+"<p>"+location.description+"</p>";
+	  	//This was the original code
+	    // var html = "<p><b><a href="+location.url+">"+location.name+"</a></b></p>"+"<p>"+location.phone+"</p>"+"<p><a href="+location.image_url+"><img src="+location.image_url+" height='142' ></a></p>"+"<p>"+location.description+"</p>";
+
+	    // //This is the new code with the bigImg and normalImg funtions from above
+	    // var html = "<p><b><a href="+location.url+">"+location.name+"</a></b></p>"+"<p>"+location.phone+"</p>"+"<p><img onmouseover=bigImg(this) onmouseout=normalImg(this) border='0' src="+location.image_url" + "alt="location.alt_image_url" + "height='300'></p>"+"<p>" + location.description + "</p>";
+
+	    //This is the new code
+	    var html = "<p><b><a href="+location.url+">"+location.name+"</a></b></p>" 	+ "<p>"+location.phone+"</p>" + "<p><img class='enlarge-onhover' src="+location.image_url+" alt="+location.alt_image_url+"></p>" + "<p>"+location.description+"</p>";
 
 	    // set the content (saved in html variable using function closure)
 	    if (location.name.includes("Your Location:")) {
@@ -223,6 +259,18 @@
 	    iw.open(map, marker);
 	  });
 	}
+
+	//<img class="enlarge-onhover" src="img.jpg">
+
+	//-------------------------------------------------------
+	//+"<p><img src="+location.image_url+" height='142'></p>"+
+
+	//Original code with my info plugged in
+	//+"<p><img onmouseover=" + bigImg(this) + " onmouseout=" + normalImg(this) + " border='0' src="location.image_url" + "alt="location.alt_image_url" + "height='600'></p>"+
+
+	//Original code from online
+	// <img onmouseover="bigImg(this)" onmouseout="normalImg(this)" border="0" src="smiley.gif" alt="Smiley" width="32" height="32">
+	//-------------------------------------------------------
 	
 </script>
 
