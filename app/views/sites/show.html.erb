@@ -30,8 +30,8 @@
 
 <div id="map_canvas"></div>
 <!-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script> -->
-<script>
 
+<script>
 	//from: http://jsfiddle.net/geocodezip/7de0z99e/2/
 	//Modify the code between the double lines to work woth your working code
 	var geocoder;
@@ -204,7 +204,7 @@
 		  }
 	  }.bind(this));
 
-		//grab the historical houses from my tables via my api
+	  //grab the historical houses from my tables via my api
 	  $.get("/api/v1/houses", function(response) {
 		  //console.log('This is the $.get /api/v1/houses function')
 		  nycHistoricSites = response;
@@ -231,7 +231,7 @@
 	    // var html = "<p><b><a href="+location.url+">"+location.name+"</a></b></p>"+"<p>"+location.phone+"</p>"+"<p><a href="+location.image_url+"><img src="+location.image_url+" height='142' ></a></p>"+"<p>"+location.description+"</p>";
 
 	    //---------------------------------------------------
-	    //Start distance function
+	    //Start distance function (from: http://stackoverflow.com/questions/8404108/how-to-get-distance-between-a-marker-and-the-center-in-googlemaps?noredirect=1&lq=1)
 		var center = map.getCenter();
 		var markerLatLng = marker.getPosition();
 		var distance = google.maps.geometry.spherical.computeDistanceBetween(center, markerLatLng);
@@ -244,16 +244,20 @@
 	    var location_image_url = "<p><img class='enlarge-onhover' src="+location.image_url+" alt="+location.alt_image_url+"></p>";
 	    var location_description = "<p>"+location.description+"</p>";
 	    var location_distance = "<p><b>"+convertMetersToImperial(distance)+"</b></p>";
-	    //This is the code for enlarging the image in the infoWindow
-	    // var html = "<h3><b><a href="+location.url+">"+location.name+"</a></b></h3>" + "<p>"+location.phone+"</p>" + "<p><img class='enlarge-onhover' src="+location.image_url+" alt="+location.alt_image_url+"></p>" + "<p>"+location.description+"</p>"+"<p><b>"+convertMetersToImperial(distance)+"</b></p>";
+		//---------------------------------------------------
+		// Popup variables
+		//var popupDivOpen = "<div id='thumbwrap'>";
+	    //var popupImageHtml = "<a class='thumb' href='#'><img src="+location.image_url+" alt="+location.alt_image_url+"><span><img src="+location.image_url+" alt="+location.alt_image_url+"></span></a>";
+	    //var popupDivClose = "</div>";
 	    //---------------------------------------------------
+	    //This is the code for enlarging the image in the infoWindow
 	    var html = location_url+phone+location_image_url+location_description+location_distance;
 	    //---------------------------------------------------
 
-	    //This is the Modal code
-
-		// End modal code
-	    //-----------------------------------
+	    //Temp Popup Window Code - not currently using
+	    //<div id="thumbwrap">
+			//<a class="thumb" href="#"><img src="images/jamie1.jpg" alt=""><span><img src="images/jamie1big.jpg" alt=""></span></a>
+		//</div>
 
 	    // set the content (saved in html variable using function closure)
 	    if (location.name.includes("Your Location:")) {
