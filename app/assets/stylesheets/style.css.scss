@@ -2,31 +2,7 @@
 	/* Begin Popup CSS Code */
 	/* http://www.websitecodetutorials.com/code/photo-galleries/css-popup-image.php */
 
-	#thumbwrap {
-		margin:75px auto;
-		width:252px; height:252px;
-	}
-	.thumb {
-		float:left; /* must be floated for same cross browser position of larger image */
-		position:relative;
-		margin:3px;
-	}
-	.thumb img { 
-		border:1px solid #000;
-		vertical-align:bottom;
-	}
-	.thumb:hover {
-		border:0; /* IE6 needs this to show large image */
-		z-index:1;
-	}
-	.thumb span { 
-		position:absolute;
-		visibility:hidden;
-	}
-	.thumb:hover span { 
-		visibility:visible;
-		top:37px; left:37px; 
-	}
+
 	/* End Popup Code */
 	/*----------------------------*/
 
@@ -79,15 +55,19 @@
 
 	.bg { 
 	    /* The image used */
-	    background-image: url("http://www.old-maps.com/NY/ny-state/NY_1812_Arrowsmith-web.jpg");
+	    /*background-image: url("http://www.old-maps.com/NY/ny-state/NY_1812_Arrowsmith-web.jpg");*/
+	    /*background-image: url('/new_york_state_1796.jpg');*/
+	    /*background-image: url('/NY_1849_Ensign_Thayer.jpg');*/
+	    background-image: url('/15636975_copy.jpg');
 	    /* Other images */
+	    /* background-image: url('/15636975_copy_01.jpg'); */ 
 	    /* http://tile.loc.gov/image-services/iiif/service:gmd:gmd380:g3800:g3800:ar104703/full/pct:12.5/0/default.jpg */
 	    /* http://www.old-maps.com/NY/ny-state/NY_1812_Arrowsmith-web.jpg */
 	    /* http://www.stonybrook.edu/libmap/img005b.jpg */
 
 	    /* Full height */
-	    height: 130%;
-	    width: 130%;
+	    height: 100%;
+	    width: 100%;
 	    /* Center and scale the image nicely */
 	    background-position: center;
 	    background-repeat: no-repeat;

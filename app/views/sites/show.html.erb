@@ -28,12 +28,26 @@
 <!-- <script src="https://maps.googleapis.com/maps/api/js" ></script> -->
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false"></script>
 
+<!-- <div id="outer-wrapper">
+    <div id="side_bar">
+        Side Bar
+    </div>
+    <div class="map-wrap">
+        <div id="map_canvas"></div> -->
+        <!-- <div id="map"></div> -->
+    <!-- </div> -->
+<!-- </div>  -->
+
+<!-- Side bar from https://apneadiving.github.io/ -->
+
+
 <div id="map_canvas"></div>
 <!-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script> -->
 
 <script>
 	//from: http://jsfiddle.net/geocodezip/7de0z99e/2/
 	//Modify the code between the double lines to work woth your working code
+
 	var geocoder;
 	var map;
 	var historicalSites = [];//declare this variable outside of the $.Get function
@@ -166,7 +180,7 @@
 			    }
 			],
 			scaleControl: true
-	  });
+	  	});
 
 	  function createMarker(location){
 		    // Create a marker and set its position.
@@ -176,7 +190,10 @@
 		      title: location.name
 		    });
 		    infoWindow(markerTest, map, location);
+
 	  }
+
+	  
 
 	  function createCenterMarker(location){
 	
@@ -195,15 +212,16 @@
 
 	  //grab the (state) historical sites from my tables via my api
 	  $.get("/api/v1/sites", function(response) {
-	  	  //console.log('This is the $.get /api/v1/sites function')
+	  	  console.log('This is the $.get /api/v1/sites function')
 	  	  historicalSites = response;
 		  //create an array and fill it with all of the historicalSites
 		  for (var i = 0; i < historicalSites.length; i++) {
 		    //call the function 
 		    createMarker(historicalSites[i]);
+
 		  }
 	  }.bind(this));
-
+	  
 	  //grab the historical houses from my tables via my api
 	  $.get("/api/v1/houses", function(response) {
 		  //console.log('This is the $.get /api/v1/houses function')
@@ -212,17 +230,21 @@
 		  for (var i = 0; i < nycHistoricSites.length; i++) {
 		    //call the function 
 		    createMarker(nycHistoricSites[i]);
+		    
 		  }
 	  }.bind(this));
+
 	}
 
 	//Render the map window
 	google.maps.event.addDomListener(window, "load", initialize);
 
 	// global infowindow
-	var iw = new google.maps.InfoWindow({
+	var pinInfowindow = new google.maps.InfoWindow({
 	  maxWidth: 385
 	});
+
+	
 
 	function infoWindow(marker, map, location) {
 
@@ -232,6 +254,7 @@
 
 	    //---------------------------------------------------
 	    //Start distance function (from: http://stackoverflow.com/questions/8404108/how-to-get-distance-between-a-marker-and-the-center-in-googlemaps?noredirect=1&lq=1)
+		
 		var center = map.getCenter();
 		var markerLatLng = marker.getPosition();
 		var distance = google.maps.geometry.spherical.computeDistanceBetween(center, markerLatLng);
@@ -245,32 +268,23 @@
 	    var location_description = "<p>"+location.description+"</p>";
 	    var location_distance = "<p><b>"+convertMetersToImperial(distance)+"</b></p>";
 		//---------------------------------------------------
-		// Popup variables
-		//var popupDivOpen = "<div id='thumbwrap'>";
-	    //var popupImageHtml = "<a class='thumb' href='#'><img src="+location.image_url+" alt="+location.alt_image_url+"><span><img src="+location.image_url+" alt="+location.alt_image_url+"></span></a>";
-	    //var popupDivClose = "</div>";
-	    //---------------------------------------------------
+
 	    //This is the code for enlarging the image in the infoWindow
 	    var html = location_url+phone+location_image_url+location_description+location_distance;
 	    //---------------------------------------------------
 
-	    //Temp Popup Window Code - not currently using
-	    //<div id="thumbwrap">
-			//<a class="thumb" href="#"><img src="images/jamie1.jpg" alt=""><span><img src="images/jamie1big.jpg" alt=""></span></a>
-		//</div>
-
 	    // set the content (saved in html variable using function closure)
 	    if (location.name.includes("Your Location:")) {
 	    	var html1 = "<div><h3>" + location.name + "</h3><p>";
-	    	iw.setContent(html1);
+	    	pinInfowindoww.setContent(html1);
 	    } else {
-	    	iw.setContent(html);
+	    	pinInfowindow.setContent(html);
 	    }
 	    // open the infowindow on the marker.
-	    iw.open(map, marker);
+	    pinInfowindow.open(map, marker);
 	  });
-	}
 
+	}
 	
 </script>
 

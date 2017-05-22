@@ -4,31 +4,60 @@
   /*colors that I can use: (gray) #484848; (black) #000000; see: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value*/
   /*This is from the code that I got on http://jsfiddle.net/geocodezip/7de0z99e/2/ */
   /*http://stackoverflow.com/questions/38569860/close-all-other-infowindows-when-one-is-clicked */
+/*----------------------------*/
+/*Trying to create a side bar */
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+  }
+  body {
+    padding: 0 !important;
+  }
+  #outer-wrapper {
+    width: 100%;
+    height: 100%;
+    margin: 41px 0 0;
+    padding: 0;
+  }
+  #side_bar {
+    background: #fff;
+    width: 200px;
+    height: 100%;
+    float: left;
+  }
+  .map-wrap {
+    margin-left: 200px; 
+    height: 100%;
+  }
+  #map-02 {
+    width: auto;
+    height: 100%;
+    background: #fff;
+  }
+  #map-02 img {
+    max-width: none;
+  }
 
-  /*html,
-  body,*/
-  
+
   /*----------------------------*/
   /* Begin Popup CSS Code */
-  
-  /* http://www.websitecodetutorials.com/code/photo-galleries/css-popup-image.php */
-  #thumbwrap {
-    margin:75px auto;
-    width:252px; height:252px;
-  }
+
   /* End Popup Code */ 
   /*----------------------------*/
 
-  html, 
+
+  /* body height was 100%, with no width, while everything else was 0% */
+  /*html, 
 
   body {
-    /* height was 100%, with no width, while everything else was 0% */
+    
     height: 100%;
     width: 100%;
     margin: 30;
     padding: 30;
   }
-
+  */
   header{
     margin-bottom: 15%;
   }
