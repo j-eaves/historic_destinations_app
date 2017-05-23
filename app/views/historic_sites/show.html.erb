@@ -85,13 +85,13 @@
 		//convert from meters to feet
 		//Used for calculating distance from center point to a pin on the map
 		var convertMetersToImperial = function(meters) {
-			var result = "Distance from start point: ";
+			var result = "";
 			var feet = meters/0.304800609601;
 			var miles = feet/5280;
 			if (miles > 1) {
-				result += miles.toFixed(2).toString() + " miles" 
+				result += miles.toFixed(2).toString() + " miles away"
 			} else {
-				result += feet.toFixed(2).toString() + " feet"
+				result += feet.toFixed(2).toString() + " feet away"
 			}
 			return result;
 		};
@@ -166,6 +166,17 @@
 			  	}
 			}.bind(this));
 
+			//grab the historical house sites from my tables via my api
+			$.get("/api/v1/houses", function(response) {
+				console.log('This is the $.get /api/v1/sites function')
+				//create an array and fill it with all of the historicalSites
+				nycHistoricSites = response;
+			  	for (var i = 0; i < nycHistoricSites.length; i++) {
+			    	//call the function createMarker()
+			    	createMarker(nycHistoricSites[i]);
+			  	}
+			}.bind(this));
+
 			//} //this was the original closing bracket location for initialize
 			//the functions infowindow,createMarker were placed inside the initialize function by me, to make the app work
 
@@ -176,7 +187,7 @@
 
 			//my old infowindow
 			// var infowindow = new google.maps.InfoWindow({
-	  // 			maxWidth: 385
+			//		maxWidth: 385
 			// });
 
 			// This function picks up the click and opens the corresponding info window
@@ -250,7 +261,7 @@
 				var markerLatLng = marker.getPosition();
 				//the distance variable may require a different google api script...
 				var distance = google.maps.geometry.spherical.computeDistanceBetween(center, markerLatLng);
-				var htmlDistance = "<p><b>"+convertMetersToImperial(distance)+"</b></p>";
+				var htmlDistance = "<p>"+convertMetersToImperial(distance)+"</p>";
 			    //-----------------
 			    //create html content for infowindows to display when clicked
 			    var html = jsonInfoToHtml(jsonData);
@@ -278,7 +289,7 @@
 				var sidebar = $('#side_bar');
 				var sidebar_entry = $('<li/>', {
 				//'html': name, //this was the old variable from his code...
-				'html': jsonData.name,
+				'html': jsonData.name + htmlDistance, 
 				'click': function() {
 				  google.maps.event.trigger(marker, 'click');
 				},
@@ -286,7 +297,7 @@
 				  $(this).css('color', 'red');
 				},
 				'mouseleave': function() {
-				  $(this).css('color', '#999999');
+				  $(this).css('color', '#0B0B0B');
 				}
 				}).appendTo(sidebar);
 			 } //END createMarker()
