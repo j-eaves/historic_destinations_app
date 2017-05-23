@@ -2,7 +2,8 @@ class HistoricSitesController < ApplicationController
 	require 'geocoder'
 
 	def new
-		render 'historic_sites/new.html.erb'
+		# render 'historic_sites/new.html.erb'
+		render 'new.html.erb'
 	end
 
 	def create
@@ -19,7 +20,8 @@ class HistoricSitesController < ApplicationController
 			@lng = @coordinates[1]
 			render 'historic_sites/show.html.erb'
 		else
-			redirect_to '/historic_sites/new.html.erb'
+			# redirect_to '/historic_sites/new.html.erb'
+			redirect_to 'new.html.erb'
 		end
 	end
 	def show

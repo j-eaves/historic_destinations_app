@@ -15,8 +15,8 @@ Rails.application.routes.draw do
 	get '/sites' => 'sites#show' #this was commented out
 
 	#routes for historic_sites controller (for sidebar show page)
-	get '/historic_sites/new' => 'historic_sites#new' #this could also be the center_point#create route
-	post '/historic_sites/create' => 'historic_sites#create' #this was commented out
+	get '/historic_sites' => 'historic_sites#new' #this could also be the center_point#create route
+	post '/historic_sites' => 'historic_sites#create' #this was commented out
 	get '/historic_sites/show' => 'historic_sites#show' #this was commented out
 
 	#routes for signing up a new user

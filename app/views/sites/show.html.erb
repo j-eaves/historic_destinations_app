@@ -266,16 +266,13 @@
 	    var location_image_url = "<p><img class='enlarge-onhover' src="+location.image_url+" alt="+location.alt_image_url+"></p>";
 	    var location_description = "<p>"+location.description+"</p>";
 	    var location_distance = "<p><b>"+convertMetersToImperial(distance)+"</b></p>";
-		//---------------------------------------------------
-
-	    //This is the code for enlarging the image in the infoWindow
 	    var html = location_url+phone+location_image_url+location_description+location_distance;
 	    //---------------------------------------------------
 
 	    // set the content (saved in html variable using function closure)
 	    if (location.name.includes("Your Location:")) {
 	    	var html1 = "<div><h3>" + location.name + "</h3><p>";
-	    	pinInfowindoww.setContent(html1);
+	    	pinInfowindow.setContent(html1);
 	    } else {
 	    	pinInfowindow.setContent(html);
 	    }
