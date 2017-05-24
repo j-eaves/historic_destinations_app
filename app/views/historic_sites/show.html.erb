@@ -1,4 +1,5 @@
 <!-- https://stackoverflow.com/questions/35610873/google-maps-with-responsive-sidebar -->
+<!-- original code by geocodezip (Thank you!) -->
 
 	<!-- &callback=initialize was previously &callback=initMap but didn't work -->
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAti92VRg88Ky1xV1XAaqh9fi7r9amnKqE&callback=initialize&libraries=geometry&sensor=false" async defer></script>
@@ -105,6 +106,8 @@
 			return result;
 		};
 
+		//function by Tharik Kanaka (Thank you!)
+		//https://stackoverflow.com/questions/26836146/how-to-sort-array-items-by-longitude-latitude-distance-in-javascripts
 		function calculateDistance(lat1, lon1, lat2, lon2, unit) {
 		    var radlat1 = Math.PI * lat1/180
 		    var radlat2 = Math.PI * lat2/180
@@ -120,28 +123,6 @@
 		    if (unit=="N") { dist = dist * 0.8684 }
 		    return dist
 		}
-
-		// function distanceFromCenterPoint(centerPoint, jsonObject){
-		// 	console.log("Count 1");
-		// 	var myLatLng = {latitude: jsonObject.latitude, longitude: jsonObject.longitude};
-		// 	return google.maps.geometry.spherical.computeDistanceBetween(centerPoint, ( myLatLng['latitude'], myLatLng['longitude']);
-		// }
-
-		// function distanceFromCenterPoint(centerPoint, jsonArray){
-		// 	distMeters = 0;
-		// 	for(var i = 0; i < jsonArray.length; i++){
-		// 		var myLatLng = {latitude: jsonArray[i].latitude, longitude: jsonArray[i].longitude};
-		// 		distMeters = google.maps.geometry.spherical.computeDistanceBetween(centerPoint, myLatLng);
-		// 		var miles = convertMetersToMiles(distMeters);
-		// 		jsonArray[i]["distance"] = miles; 
-		// 	}
-		// }
-
-		// function sortByDistAsc(jsonArray){
-		// 	homes.sort(function(a, b) {
-		// 	    return parseFloat(a.price) - parseFloat(b.price);
-		// 	});
-		// }
 
 		//end of my variables and functions
 
@@ -159,7 +140,6 @@
 			var myOptions = {
 			zoom: 12,
 			center: new google.maps.LatLng(latitude, longitude),
-			//center: new google.maps.LatLng(43.907787, -79.359741),
 			mapTypeControl: true,
 			mapTypeControlOptions: {
 			  style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
@@ -280,20 +260,6 @@
 			infowindow.close();
 			});
 
-			//original author's code:
-			// Add markers to the map
-			// Set up three markers with info windows 
-			// add the points
-			//Create points and markers to the map:
-			// var point = new google.maps.LatLng(43.65654, -79.90138);
-			// var marker = createMarker(point, "This place", "Some stuff to display in the<br>First Info Window")
-
-			// var point = new google.maps.LatLng(43.91892, -78.89231);
-			// var marker = createMarker(point, "That place", "Some stuff to display in the<br>Second Info Window")
-
-			// var point = new google.maps.LatLng(43.82589, -78.89231);
-			// var marker = createMarker(point, "The other place", "Some stuff to display in the<br>Third Info Window")
-
 			function createCenterMarker(centerPointHash){
 				//Create a center point parker that is different from the rest
 			    var pinImage = new google.maps.MarkerImage("http://www.googlemapsmarkers.com/v1/009900/");
@@ -306,7 +272,6 @@
 			    });
 			    //infoWindow(marker1, map, centerPointHash);
 			};
-
 
 
 			createCenterMarker(centerPoint);
@@ -465,7 +430,6 @@
 				}).appendTo(sidebar);
 			 } //END createMarker()
 			//-----------------
-			console.log(gmarkers[0]);
 			// //**** THIS IS THE OLD createMarker FUNCTION of the author's ****//
 			// // A function to create the marker and set up the event window function 
 			// //html will be a pre-made variable...
