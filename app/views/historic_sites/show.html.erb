@@ -1,6 +1,9 @@
 <!-- https://stackoverflow.com/questions/35610873/google-maps-with-responsive-sidebar -->
 <!-- original code by geocodezip (Thank you!) -->
 
+<!-- https://stackoverflow.com/questions/14229695/google-maps-api-throws-uncaught-referenceerror-google-is-not-defined-only-whe -->
+<!-- Dr Molle answered the question of why this code was breaking at first -->
+
 	<!-- &callback=initialize was previously &callback=initMap but didn't work -->
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAti92VRg88Ky1xV1XAaqh9fi7r9amnKqE&callback=initialize&libraries=geometry&sensor=false" async defer></script>
 
@@ -8,11 +11,12 @@
 
 	<div id="wrapper">
 	  <!-- Sidebar -->
-	  <div id="sidebar-wrapper">
-
+	  <div id="sidebar-wrapper" class="btn-toolbar">
 	    <ul class="sidebar-nav" id="side_bar">
-	      <li class="sidebar-brand" style="font-weight: bold; color: ##0B0B0B;">
-	        <h3 >Historic Sites</h3>
+	      <li class="sidebar-brand" style="font-weight: bold; color: #0B0B0B;">
+	      	<!-- <div class="well well-sm"> -->
+	        	<!-- <h3>Historic Sites</h3> -->
+	        <!-- </div> -->
 	      </li>
 	      <hr>
 	    </ul>
@@ -32,7 +36,7 @@
 	        <div class="col-lg-12">
 	          <h1>
 		    <a href="#menu-toggle" class="gradient-menu" id="menu-toggle"></a>
-	          &nbsp;search results&nbsp;<!-- a href="#menu-toggle" class="btn btn-default" >Toggle Sidebar</a -->
+	          <!--&nbsp;search results&nbsp; --><!-- a href="#menu-toggle" class="btn btn-default" >Toggle Sidebar</a -->
 	          </h1>
 	          <!-- you can use tables or divs for the overall layout -->
 	          <div id="map_canvas"></div>
@@ -310,27 +314,17 @@
 
 				}.bind(this));
 				
-				// {name: 'something', other: 'other_val'}
-				// {name: 'something', other: 'other_val', distance: '1 mile'}
-			  	// for (var i = 0; i < historicalSites.length; i++) {
-			   //  	//call the function createMarker()
-			   //  	createMarker(historicalSites[i]);
-			  	// }
-			}.bind(this));
 
+			}.bind(this));
 
 			//} //this was the original closing bracket location for initialize
 			//the functions infowindow,createMarker were placed inside the initialize function by me, to make the app work
 
 			// infowindow from this guy's code:
 			var infowindow = new google.maps.InfoWindow({
-			  size: new google.maps.Size(150, 50)
+			  size: new google.maps.Size(150, 50),
+			  maxWidth: 400
 			});
-
-			//my old infowindow
-			// var infowindow = new google.maps.InfoWindow({
-			//		maxWidth: 385
-			// });
 
 			// This function picks up the click and opens the corresponding info window
 			function myclick(i) {
@@ -340,16 +334,15 @@
 			//ADDRESS IMAGE SIZE AND ENLARGING
 			function jsonInfoToHtml(jsonData) {
 				//takes json data from one historical site and returns a string for an infowindow - REPLACES STRING CODE IN infoWindow() above
-				var jsonData_url = "<h3><b><a href="+jsonData.url+">"+jsonData.name+"</a></b></h3>";
+				var jsonData_url = "<h3><b><a href="+jsonData.url+" target='_blank'>"+jsonData.name+"</a></b></h3>";
 			    var phone = "<p>"+jsonData.phone+"</p>";
 			    var jsonData_image_url = "<p><img class='enlarge-onhover' src="+jsonData.image_url+" alt="+jsonData.alt_image_url+"></p>";
+			    var jsonData_alt_image_url = "<p><img class='enlarge-onhover' src="+jsonData.alt_image_url+" alt="+jsonData.alt_image_url+"></p>";
 			    var jsonData_description = "<p>"+jsonData.description+"</p>";
 			    var html = jsonData_url+phone+jsonData_image_url+jsonData_description;
 			    //var contentString = html;
 			    return html;
 			}
-
-			
 
 			//My own create marker function:
 			function createMarker(jsonData){
@@ -377,34 +370,25 @@
 				//-----------------
 
 			    google.maps.event.addListener(marker, 'click', function() {
-			      //use an if statement to differentiate reg pins from center
-			   	  // if (jsonData.name.includes("Your Location:")) {
-				  //     var centerPointHtml = "<div><h3>" + jsonData.name + "</h3><p>";
-				  //     infowindow.setContent(centerPointHtml);
-				  // } else {
-				  //   	infowindow.setContent(contentString);
-				  // }
-			      //// open the infowindow on the marker.
 			      infowindow.setContent(contentString);//content string goes here...
 			      infowindow.open(map, marker);
 			    });
-	    	
 	    		//save the info we need to use later for the side_bar
 			    gmarkers.push(marker);
 			    //add a line to the side_bar html
 				var sidebar = $('#side_bar');
 				var sidebar_entry = $('<li/>', {
 				//'html': name, //this was the old variable from his code...
-				'html': jsonData.name + htmlDistance, 
+				'html': "<div>" + "<button class='btn btn-primary btn-space custom btn-block btn-lg' type='button'>" + jsonData.name + htmlDistance + "</button>" + "</div>", 
 				'click': function() {
 				  google.maps.event.trigger(marker, 'click');
 				},
-				'mouseenter': function() {
-				  $(this).css('color', 'red');
-				},
-				'mouseleave': function() {
-				  $(this).css('color', '#0B0B0B');
-				}
+				// 'mouseenter': function() {
+				//   $(this).css('color', 'red');
+				// },
+				// 'mouseleave': function() {
+				//   $(this).css('color', '#0B0B0B');
+				// }
 				}).appendTo(sidebar);
 			 } //END createMarker()
 

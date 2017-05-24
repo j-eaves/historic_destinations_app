@@ -7,7 +7,12 @@ html,
 body {
   height: 100%;
 }
-#map_canvas,
+#map_canvas{
+  /*height: 85%;
+  width: 90%;
+  margin: 20px;*//*Was 0px*/
+  /*padding: 10px*/
+}
 #wrapper,
 #page-content-wrapper {
   height: 100%;
@@ -91,7 +96,7 @@ body {
   height: 100%;
   margin-left: -250px;
   overflow-y: auto;
-  background: #C6C5C6;
+  background: #999999;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;

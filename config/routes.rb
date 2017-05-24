@@ -8,13 +8,14 @@ Rails.application.routes.draw do
 	end
 
 	get '/sites' => 'sites#index'
-	get '/' => 'sites#new'
+	# get '/' => 'sites#new'
 	get '/sites' => 'sites#new' #this could also be the center_point#create route
 	post '/sites' => 'sites#create' #this was commented out
 	#post '/api/v1/sites' => 'api/v1/center_point#index' #this was not commented out
 	get '/sites' => 'sites#show' #this was commented out
 
 	#routes for historic_sites controller (for sidebar show page)
+	get '/' => 'historic_sites#new'
 	get '/historic_sites' => 'historic_sites#new' #this could also be the center_point#create route
 	post '/historic_sites' => 'historic_sites#create' #this was commented out
 	get '/historic_sites/show' => 'historic_sites#show' #this was commented out
