@@ -45,9 +45,14 @@
 		#category: site['category'],
 		#county: site['county'],
 		#url: site['facility_url'],
-		# longitude: site['location']['coordinates'][0],
-		# latitude: site['location']['coordinates'][1],
+		#longitude: site['location']['coordinates'][0],
+		#latitude: site['location']['coordinates'][1],
 		#region_number: site['region']
+		#description: null,
+		#image_url: null,
+		#alt_image_url: null
+		#address: null,
+		#phone: null,
 		# )
 #end
 #------------------------------------------------------------------------------
@@ -58,18 +63,22 @@
 # historic_sites_nyc.each do |historic_site|
 # 	historic_house = HistoricSitesNyc.create(
 # 		name: historic_site[:Name], 
-# 		location: historic_site[:Location], 
+# 		address: historic_site[:Location], 
 # 		park_name: historic_site[:Park_Name], 
 # 		phone: historic_site[:Phone], 
 # 		description: historic_site[:Description], 
 # 		accessible: historic_site[:Accessible], 
 # 		historic_house_trust_website: historic_site[:HHT_webpage], 
 # 		house_website: historic_site[:House_Site])
+#		image_url: null,
+#		alt_image_url: null,
+# 		property_id: null,
+#		latitude: null,
+# 		longitude: null,
 # 	historic_house.save
 # end
 #------------------------------------------------------------------------------
-
-coordinates = Geocoder.coordinates(HistoricSitesNyc.first.location+", "+HistoricSitesNyc.first.park_name)
+#coordinates = Geocoder.coordinates(HistoricSitesNyc.first.location+", "+HistoricSitesNyc.first.park_name)
 #------------------------------------------------------------------------------
 # Name
 # Location

@@ -5,17 +5,6 @@
 
 	<!-- <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false"></script> -->
 
-	<!-- DON'T USE THE API ADDRESSES BELOW -->
-	<!-- <script src="http://maps.googleapis.com/maps/api/js?v=3&sensor=false&callback=initialize"></script> -->
-
-	<!-- &callback=initialize was previously &callback=initMap but didn't work -->
-	<!-- <script src="https://maps.googleapis.com/maps/api/js"></script> -->
-
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-	
-	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
-	<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" /> -->
-
 	<div id="wrapper">
 	  <!-- Sidebar -->
 	  <div id="sidebar-wrapper">
@@ -42,7 +31,7 @@
 	        <div class="col-lg-12">
 	          <h1>
 		    <a href="#menu-toggle" class="gradient-menu" id="menu-toggle"></a>
-	          &nbsp;Map&nbsp;<!-- a href="#menu-toggle" class="btn btn-default" >Toggle Sidebar</a -->
+	          &nbsp;search results&nbsp;<!-- a href="#menu-toggle" class="btn btn-default" >Toggle Sidebar</a -->
 	          </h1>
 	          <!-- you can use tables or divs for the overall layout -->
 	          <div id="map_canvas"></div>
@@ -78,12 +67,14 @@
 		//var map;
 		var historicalSites = [];//declare this variable outside of the $.Get function
 		var nycHistoricSites = [];//declare this variable outside of the $.Get function
+		var allSites = [];
 		var latitude = parseFloat("<%= @lat %>");//mine
 		var longitude = parseFloat("<%= @lng %>");//mine
 		var centerPoint = {name: "Your Location: <%= @address %>", latitude: latitude, longitude: longitude};//mine
 
 		//convert from meters to feet
 		//Used for calculating distance from center point to a pin on the map
+
 		var convertMetersToImperial = function(meters) {
 			var result = "";
 			var feet = meters/0.304800609601;
@@ -95,6 +86,53 @@
 			}
 			return result;
 		};
+
+		var convertDistanceToString = function(distanceInMiles) {
+			var result = "";
+			var feet = distanceInMiles/5280;
+			if (distanceInMiles > 1) {
+				result += distanceInMiles.toFixed(2).toString() + " miles away"
+			} else {
+				result += feet.toFixed(2).toString() + " feet away"
+			}
+			return result;
+		};
+
+		var convertMetersToMiles = function(meters) {
+			var result = 0;
+			var feet = meters/0.304800609601;
+			var miles = feet/5280;
+			return result;
+		};
+
+		// function appendToAllSitesArray(sitesArray){
+		// 	for(var i = 0; i < sitesArray.length; i++){
+		// 		allSites.push(sitesArray[i]);
+		// 	}
+		// }
+
+		// function distanceFromCenterPoint(centerPoint, jsonObject){
+		// 	console.log("Count 1");
+		// 	var myLatLng = {latitude: jsonObject.latitude, longitude: jsonObject.longitude};
+		// 	return google.maps.geometry.spherical.computeDistanceBetween(centerPoint, ( myLatLng['latitude'], myLatLng['longitude']);
+		// }
+
+		// function distanceFromCenterPoint(centerPoint, jsonArray){
+		// 	distMeters = 0;
+		// 	for(var i = 0; i < jsonArray.length; i++){
+		// 		var myLatLng = {latitude: jsonArray[i].latitude, longitude: jsonArray[i].longitude};
+		// 		distMeters = google.maps.geometry.spherical.computeDistanceBetween(centerPoint, myLatLng);
+		// 		var miles = convertMetersToMiles(distMeters);
+		// 		jsonArray[i]["distance"] = miles; 
+		// 	}
+		// }
+
+		// function sortByDistAsc(jsonArray){
+		// 	homes.sort(function(a, b) {
+		// 	    return parseFloat(a.price) - parseFloat(b.price);
+		// 	});
+		// }
+
 		//end of my variables and functions
 
 		function initialize() {
@@ -117,7 +155,112 @@
 			  style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
 			},
 			navigationControl: true,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			scaleControl: true,
+			styles: [
+			    {
+			        "featureType": "landscape",
+			        "stylers": [
+			            {
+			                "saturation": -7
+			            },
+			            {
+			                "gamma": 1.02
+			            },
+			            {
+			                "hue": "#ffc300"
+			            },
+			            {
+			                "lightness": -10
+			            }
+			        ]
+			    },
+			    {
+			        "featureType": "road.highway",
+			        "stylers": [
+			            {
+			                "hue": "#ffaa00"
+			            },
+			            {
+			                "saturation": -45
+			            },
+			            {
+			                "gamma": 1
+			            },
+			            {
+			                "lightness": -4
+			            }
+			        ]
+			    },
+			    {
+			        "featureType": "road.arterial",
+			        "stylers": [
+			            {
+			                "hue": "#ffaa00"
+			            },
+			            {
+			                "lightness": -10
+			            },
+			            {
+			                "saturation": 64
+			            },
+			            {
+			                "gamma": 0.9
+			            }
+			        ]
+			    },
+			    {
+			        "featureType": "road.local",
+			        "stylers": [
+			            {
+			                "lightness": -5
+			            },
+			            {
+			                "hue": "#00f6ff"
+			            },
+			            {
+			                "saturation": -40
+			            },
+			            {
+			                "gamma": 0.75
+			            }
+			        ]
+			    },
+			    {
+			        "featureType": "poi",
+			        "stylers": [
+			            {
+			                "saturation": -30
+			            },
+			            {
+			                "lightness": 11
+			            },
+			            {
+			                "gamma": 0.5
+			            },
+			            {
+			                "hue": "#ff8000"
+			            }
+			        ]
+			    },
+			    {
+			        "featureType": "water",
+			        "stylers": [
+			            {
+			                "hue": "#0077ff"
+			            },
+			            {
+			                "gamma": 1.25
+			            },
+			            {
+			                "saturation": -22
+			            },
+			            {
+			                "lightness": -31
+			            }
+			        ]
+			    }
+			]
 				//SNAZZY MAP GOES HERE!
 			}
 			map = new google.maps.Map(document.getElementById("map_canvas"),
@@ -154,6 +297,8 @@
 			    //infoWindow(marker1, map, centerPointHash);
 			};
 
+
+
 			createCenterMarker(centerPoint);
 
 			//grab the (state) historical sites from my tables via my api
@@ -161,22 +306,51 @@
 				console.log('This is the $.get /api/v1/sites function')
 				//create an array and fill it with all of the historicalSites
 				historicalSites = response;
+				// LOOP THROUGH HISTORICALSITES
+				$.get("/api/v1/houses", function(response) {
+					console.log('This is the $.get /api/v1/houses function')
+					console.log("HOUSESSSSS");
+					//create an array and fill it with all of the historicalSites
+					nycHistoricSites = response;
+					console.log("********Here are all of the sites!*******")
+					console.log(historicalSites);
+					console.log(nycHistoricSites);
+					allSites = historicalSites.concat(nycHistoricSites);
+					console.log(allSites[0]['longitude'])
+					// for( var i = 0; i < allSites.length; i++){
+					// 	console.log("Count 2");
+					// 	allSites[i]['distance'] = distanceFromCenterPoint(centerPoint, allSites[i]);
+					// }
+					console.log("allSites");
+					console.log(allSites);
+					console.log(allSites);
+					//console.log(nycHistoricSites);
+			  		for (var i = 0; i < nycHistoricSites.length; i++) {
+			    		//call the function createMarker()
+			    		createMarker(nycHistoricSites[i]);
+			  		}
+				}.bind(this));
+				// add distance to each object
+				// {name: 'something', other: 'other_val'}
+				// {name: 'something', other: 'other_val', distance: '1 mile'}
 			  	for (var i = 0; i < historicalSites.length; i++) {
 			    	//call the function createMarker()
 			    	createMarker(historicalSites[i]);
 			  	}
 			}.bind(this));
 
-			//grab the historical house sites from my tables via my api
-			$.get("/api/v1/houses", function(response) {
-				console.log('This is the $.get /api/v1/sites function')
-				//create an array and fill it with all of the historicalSites
-				nycHistoricSites = response;
-			  	for (var i = 0; i < nycHistoricSites.length; i++) {
-			    	//call the function createMarker()
-			    	createMarker(nycHistoricSites[i]);
-			  	}
-			}.bind(this));
+			//add the contents of the first array to the array of all sites
+
+			// //grab the historical house sites from my tables via my api
+			// $.get("/api/v1/houses", function(response) {
+			// 	console.log('This is the $.get /api/v1/sites function')
+			// 	//create an array and fill it with all of the historicalSites
+			// 	nycHistoricSites = response;
+			//   	for (var i = 0; i < nycHistoricSites.length; i++) {
+			//     	//call the function createMarker()
+			//     	createMarker(nycHistoricSites[i]);
+			//   	}
+			// }.bind(this));
 
 			//} //this was the original closing bracket location for initialize
 			//the functions infowindow,createMarker were placed inside the initialize function by me, to make the app work
@@ -212,6 +386,8 @@
 			    return html;
 			}
 
+			
+
 			//My own create marker function:
 			function createMarker(jsonData){
 				// Create a marker and set its position.
@@ -226,6 +402,8 @@
 			    // Calculate distance from center to clicked destination marker return string
 			    var center = map.getCenter();//this comes from user input
 				var markerLatLng = marker.getPosition();
+				//console.log("markerLatLng:")
+				//console.log(markerLatLng);
 				//the distance variable may require a different google api script...
 				var distance = google.maps.geometry.spherical.computeDistanceBetween(center, markerLatLng);
 				var htmlDistance = "<p>"+convertMetersToImperial(distance)+"</p>";
@@ -251,7 +429,7 @@
 			    });
 	    	
 	    		//save the info we need to use later for the side_bar
-			    gmarkers.push(marker);			    
+			    gmarkers.push(marker);
 			    //add a line to the side_bar html
 				var sidebar = $('#side_bar');
 				var sidebar_entry = $('<li/>', {
