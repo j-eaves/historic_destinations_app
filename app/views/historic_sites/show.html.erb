@@ -335,10 +335,11 @@
 				//takes json data from one historical site and returns a string for an infowindow - REPLACES STRING CODE IN infoWindow() above
 				var jsonData_url = "<h3><b><a href="+jsonData.url+" target='_blank'>"+jsonData.name+"</a></b></h3>";
 			    var phone = "<p>"+jsonData.phone+"</p>";
+			    var address = "<p>"+jsonData.address+"</p>";
 			    var jsonData_image_url = "<p><img class='enlarge-onhover' src="+jsonData.image_url+" alt="+jsonData.alt_image_url+"></p>";
 			    var jsonData_alt_image_url = "<p><img class='enlarge-onhover' src="+jsonData.alt_image_url+" alt="+jsonData.alt_image_url+"></p>";
 			    var jsonData_description = "<p>"+jsonData.description+"</p>";
-			    var html = jsonData_url+phone+jsonData_image_url+jsonData_description;
+			    var html = jsonData_url+address+phone+jsonData_image_url+jsonData_description;
 			    //var contentString = html;
 			    return html;
 			}
@@ -369,6 +370,7 @@
 				//-----------------
 
 			    google.maps.event.addListener(marker, 'click', function() {
+			      map.setCenter(marker.getPosition());//places the infowindowat center
 			      infowindow.setContent(contentString);//content string goes here...
 			      infowindow.open(map, marker);
 			    });
