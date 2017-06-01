@@ -1,3 +1,4 @@
+
 class HistoricSitesController < ApplicationController
 	require 'geocoder'
 

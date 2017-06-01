@@ -5,7 +5,9 @@
 <!-- Dr Molle answered the question of why this code was breaking at first -->
 
 	<!-- &callback=initialize was previously &callback=initMap but didn't work -->
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<%=ENV["GOOGLE_API_KEY"]%>&callback=initialize&libraries=geometry&sensor=false" async defer></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<%=ENV["GOOGLE_API_KEY"]%>&callback=initialize&libraries=geometry&sensor=false" async defer>
+		google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
 
 	<!-- <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false"></script> -->
 
@@ -130,7 +132,7 @@
 
 		//end of my variables and functions
 
-		function initialize() {
+        function initialize() {
 			var myWrapper = $("#wrapper");
 			$("#menu-toggle").click(function(e) {
 				e.preventDefault();
@@ -142,16 +144,16 @@
 			});
 			// create the map
 			var myOptions = {
-			zoom: 10,
-			center: new google.maps.LatLng(latitude, longitude),
-			mapTypeControl: true,
-			mapTypeControlOptions: {
+			  zoom: 10,
+			  center: new google.maps.LatLng(latitude, longitude),
+			  mapTypeControl: true,
+			  mapTypeControlOptions: {
 			  style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
-			},
-			navigationControl: true,
-			mapTypeId: google.maps.MapTypeId.ROADMAP,
-			scaleControl: true,
-			styles: [
+			  },
+			  navigationControl: true,
+			  mapTypeId: google.maps.MapTypeId.ROADMAP,
+			  scaleControl: true,
+			  styles: [
 			    {
 			        "featureType": "landscape",
 			        "stylers": [
@@ -254,7 +256,7 @@
 			            }
 			        ]
 			    }
-			]
+			  ]
 				//SNAZZY MAP GOES HERE!
 			}
 			map = new google.maps.Map(document.getElementById("map_canvas"),
@@ -310,10 +312,7 @@
 			  		}
 					console.log("allSites");
 					console.log(allSites);
-
 				}.bind(this));
-				
-
 			}.bind(this));
 
 			//} //this was the original closing bracket location for initialize
@@ -379,23 +378,23 @@
 			    //add a line to the side_bar html
 				var sidebar = $('#side_bar');
 				var sidebar_entry = $('<li/>', {
-				//'html': name, //this was the old variable from his code...
-				'html': "<div>" + "<button class='btn btn-primary btn-space custom btn-block btn-lg' type='button'>" + jsonData.name + htmlDistance + "</button>" + "</div>", 
-				'click': function() {
+				  //'html': name, //this was the old variable from his code...
+				  'html': "<div>" + "<button class='btn btn-primary btn-space custom btn-block btn-lg' type='button'>" + jsonData.name + htmlDistance + "</button>" + "</div>", 
+				  'click': function() {
 				  google.maps.event.trigger(marker, 'click');
-				},
-				// 'mouseenter': function() {
-				//   $(this).css('color', 'red');
-				// },
-				// 'mouseleave': function() {
-				//   $(this).css('color', '#0B0B0B');
-				// }
+				  },
+				  // 'mouseenter': function() {
+				  //   $(this).css('color', 'red');
+				  // },
+				  // 'mouseleave': function() {
+				  //   $(this).css('color', '#0B0B0B');
+				  // }
 				}).appendTo(sidebar);
 			 } //END createMarker()
+        } //this is where I moved the closing bracket for initialize()
+        //I recently moved this addDomListener to the script with the API key to eliminate an error message about google not being defined. No more error message
+        //google.maps.event.addDomListener(window, 'load', initialize);
 
-		} //this is where i moved the closing bracket for initialize()
-
-		 google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
 
 
